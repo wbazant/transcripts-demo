@@ -1,0 +1,1277 @@
+{
+    "searchResultTotal": "0",
+    "rows": [{
+        "id": "TRIAE_CS42_1AL_TGACv1_000002_AA0000030.1",
+        "name": "TRIAE_CS42_1AL_TGACv1_000002_AA0000030.1",
+        "expressions": [{
+            "stats": {
+                "min": 7.0,
+                "lower_quartile": 7.0,
+                "median": 9.0,
+                "upper_quartile": 7.0,
+                "max": 11.0
+            },
+            "values": [{
+                "id": "ERR424774",
+                "assays": ["ERR424774"],
+                "value": 7.0
+            }, {
+                "id": "ERR424772",
+                "assays": ["ERR424772"],
+                "value": 11.0
+            }]
+        }, {
+            "stats": {
+                "min": 5.0,
+                "lower_quartile": 5.0,
+                "median": 5.5,
+                "upper_quartile": 5.0,
+                "max": 6.0
+            },
+            "values": [{
+                "id": "ERR424765",
+                "assays": ["ERR424765"],
+                "value": 5.0
+            }, {
+                "id": "ERR424726",
+                "assays": ["ERR424726"],
+                "value": 6.0
+            }]
+        }, {
+            "stats": {
+                "min": 7.0,
+                "lower_quartile": 7.0,
+                "median": 7.5,
+                "upper_quartile": 7.0,
+                "max": 8.0
+            },
+            "values": [{
+                "id": "ERR424777",
+                "assays": ["ERR424777"],
+                "value": 8.0
+            }, {
+                "id": "t9",
+                "assays": ["ERR424770", "ERR424737"],
+                "value": 7.0
+            }]
+        }, {
+            "stats": {
+                "min": 15.0,
+                "lower_quartile": 15.0,
+                "median": 15.5,
+                "upper_quartile": 15.0,
+                "max": 16.0
+            },
+            "values": [{
+                "id": "ERR424730",
+                "assays": ["ERR424730"],
+                "value": 16.0
+            }, {
+                "id": "ERR424769",
+                "assays": ["ERR424769"],
+                "value": 15.0
+            }]
+        }, {
+            "stats": {
+                "min": 10.0,
+                "lower_quartile": 10.0,
+                "median": 10.5,
+                "upper_quartile": 10.0,
+                "max": 11.0
+            },
+            "values": [{
+                "id": "t6",
+                "assays": ["ERR424763", "ERR424749"],
+                "value": 11.0
+            }, {
+                "id": "ERR424754",
+                "assays": ["ERR424754"],
+                "value": 10.0
+            }]
+        }, {
+            "stats": {
+                "min": 3.0,
+                "lower_quartile": 3.0,
+                "median": 3.0,
+                "upper_quartile": 3.0,
+                "max": 3.0
+            },
+            "values": [{
+                "id": "ERR424776",
+                "assays": ["ERR424776"],
+                "value": 3.0
+            }, {
+                "id": "t2",
+                "assays": ["ERR424751", "ERR424734"],
+                "value": 3.0
+            }]
+        }, {
+            "stats": {
+                "min": 22.0,
+                "lower_quartile": 22.0,
+                "median": 22.5,
+                "upper_quartile": 22.0,
+                "max": 23.0
+            },
+            "values": [{
+                "id": "ERR424724",
+                "assays": ["ERR424724"],
+                "value": 22.0
+            }, {
+                "id": "ERR424758",
+                "assays": ["ERR424758"],
+                "value": 23.0
+            }]
+        }, {
+            "stats": {
+                "min": 26.0,
+                "lower_quartile": 26.0,
+                "median": 28.0,
+                "upper_quartile": 26.0,
+                "max": 30.0
+            },
+            "values": [{
+                "id": "ERR424721",
+                "assays": ["ERR424721"],
+                "value": 30.0
+            }, {
+                "id": "ERR424750",
+                "assays": ["ERR424750"],
+                "value": 26.0
+            }]
+        }, {
+            "stats": {
+                "min": 9.0,
+                "lower_quartile": 9.0,
+                "median": 9.5,
+                "upper_quartile": 9.0,
+                "max": 10.0
+            },
+            "values": [{
+                "id": "ERR424762",
+                "assays": ["ERR424762"],
+                "value": 9.0
+            }, {
+                "id": "ERR424739",
+                "assays": ["ERR424739"],
+                "value": 10.0
+            }]
+        }, {
+            "stats": {
+                "min": 10.0,
+                "lower_quartile": 10.0,
+                "median": 10.0,
+                "upper_quartile": 10.0,
+                "max": 10.0
+            },
+            "values": [{
+                "id": "ERR424743",
+                "assays": ["ERR424743"],
+                "value": 10.0
+            }]
+        }, {
+            "stats": {
+                "min": 12.0,
+                "lower_quartile": 12.0,
+                "median": 16.5,
+                "upper_quartile": 12.0,
+                "max": 21.0
+            },
+            "values": [{
+                "id": "ERR424728",
+                "assays": ["ERR424728"],
+                "value": 12.0
+            }, {
+                "id": "ERR424748",
+                "assays": ["ERR424748"],
+                "value": 21.0
+            }]
+        }, {
+            "stats": {
+                "min": 20.0,
+                "lower_quartile": 20.0,
+                "median": 20.5,
+                "upper_quartile": 20.0,
+                "max": 21.0
+            },
+            "values": [{
+                "id": "ERR424756",
+                "assays": ["ERR424756"],
+                "value": 20.0
+            }, {
+                "id": "ERR424775",
+                "assays": ["ERR424775"],
+                "value": 21.0
+            }]
+        }, {
+            "stats": {
+                "min": 11.0,
+                "lower_quartile": 11.0,
+                "median": 11.5,
+                "upper_quartile": 11.0,
+                "max": 12.0
+            },
+            "values": [{
+                "id": "ERR424733",
+                "assays": ["ERR424733"],
+                "value": 11.0
+            }, {
+                "id": "ERR424767",
+                "assays": ["ERR424767"],
+                "value": 12.0
+            }]
+        }, {
+            "stats": {
+                "min": 24.0,
+                "lower_quartile": 24.0,
+                "median": 26.5,
+                "upper_quartile": 24.0,
+                "max": 29.0
+            },
+            "values": [{
+                "id": "ERR424753",
+                "assays": ["ERR424753"],
+                "value": 24.0
+            }, {
+                "id": "t3",
+                "assays": ["ERR424735", "ERR424741"],
+                "value": 29.0
+            }]
+        }, {
+            "stats": {
+                "min": 5.0,
+                "lower_quartile": 5.0,
+                "median": 7.0,
+                "upper_quartile": 5.0,
+                "max": 9.0
+            },
+            "values": [{
+                "id": "t7",
+                "assays": ["ERR424722", "ERR424723", "ERR424744", "ERR424727"],
+                "value": 5.0
+            }, {
+                "id": "ERR424732",
+                "assays": ["ERR424732"],
+                "value": 9.0
+            }]
+        }],
+        "uri": "genes/TRIAE_CS42_1AL_TGACv1_000002_AA0000030.1#information",
+        "expressionUnit": "TPM"
+    }, {
+        "id": "TRIAE_CS42_1AL_TGACv1_000002_AA0000030.2",
+        "name": "TRIAE_CS42_1AL_TGACv1_000002_AA0000030.2",
+        "expressions": [{
+            "stats": {
+                "min": 0.4,
+                "lower_quartile": 0.4,
+                "median": 1.2000000000000002,
+                "upper_quartile": 0.4,
+                "max": 2.0
+            },
+            "values": [{
+                "id": "ERR424774",
+                "assays": ["ERR424774"],
+                "value": 2.0
+            }, {
+                "id": "ERR424772",
+                "assays": ["ERR424772"],
+                "value": 0.4
+            }]
+        }, {
+            "stats": {
+                "min": 0.8,
+                "lower_quartile": 0.8,
+                "median": 0.8,
+                "upper_quartile": 0.8,
+                "max": 0.8
+            },
+            "values": [{
+                "id": "ERR424765",
+                "assays": ["ERR424765"],
+                "value": 0.8
+            }]
+        }, {
+            "stats": {
+                "min": 0.3,
+                "lower_quartile": 0.3,
+                "median": 0.55,
+                "upper_quartile": 0.3,
+                "max": 0.8
+            },
+            "values": [{
+                "id": "ERR424777",
+                "assays": ["ERR424777"],
+                "value": 0.3
+            }, {
+                "id": "t9",
+                "assays": ["ERR424770", "ERR424737"],
+                "value": 0.8
+            }]
+        }, {
+            "stats": {
+                "min": 2.0,
+                "lower_quartile": 2.0,
+                "median": 2.0,
+                "upper_quartile": 2.0,
+                "max": 2.0
+            },
+            "values": [{
+                "id": "ERR424730",
+                "assays": ["ERR424730"],
+                "value": 2.0
+            }]
+        }, {
+            "stats": {
+                "min": 0.6,
+                "lower_quartile": 0.6,
+                "median": 0.6,
+                "upper_quartile": 0.6,
+                "max": 0.6
+            },
+            "values": [{
+                "id": "t6",
+                "assays": ["ERR424763", "ERR424749"],
+                "value": 0.6
+            }]
+        }, {
+            "stats": {
+                "min": 0.4,
+                "lower_quartile": 0.4,
+                "median": 1.2000000000000002,
+                "upper_quartile": 0.4,
+                "max": 2.0
+            },
+            "values": [{
+                "id": "ERR424776",
+                "assays": ["ERR424776"],
+                "value": 0.4
+            }, {
+                "id": "t2",
+                "assays": ["ERR424751", "ERR424734"],
+                "value": 2.0
+            }]
+        }, {
+            "stats": {
+                "min": 3.0,
+                "lower_quartile": 3.0,
+                "median": 3.0,
+                "upper_quartile": 3.0,
+                "max": 3.0
+            },
+            "values": [{
+                "id": "ERR424724",
+                "assays": ["ERR424724"],
+                "value": 3.0
+            }, {
+                "id": "ERR424758",
+                "assays": ["ERR424758"],
+                "value": 3.0
+            }]
+        }, {
+            "stats": {
+                "min": 1.0,
+                "lower_quartile": 1.0,
+                "median": 1.0,
+                "upper_quartile": 1.0,
+                "max": 1.0
+            },
+            "values": [{
+                "id": "ERR424750",
+                "assays": ["ERR424750"],
+                "value": 1.0
+            }]
+        }, {
+            "stats": {
+                "min": 0.3,
+                "lower_quartile": 0.3,
+                "median": 0.5,
+                "upper_quartile": 0.3,
+                "max": 0.7
+            },
+            "values": [{
+                "id": "ERR424762",
+                "assays": ["ERR424762"],
+                "value": 0.7
+            }, {
+                "id": "ERR424739",
+                "assays": ["ERR424739"],
+                "value": 0.3
+            }]
+        }, {
+            "stats": {
+                "min": 2.0,
+                "lower_quartile": 2.0,
+                "median": 2.0,
+                "upper_quartile": 2.0,
+                "max": 2.0
+            },
+            "values": [{
+                "id": "ERR424743",
+                "assays": ["ERR424743"],
+                "value": 2.0
+            }]
+        }, {
+            "stats": {
+                "min": 2.0,
+                "lower_quartile": 2.0,
+                "median": 2.0,
+                "upper_quartile": 2.0,
+                "max": 2.0
+            },
+            "values": [{
+                "id": "ERR424728",
+                "assays": ["ERR424728"],
+                "value": 2.0
+            }]
+        }, {
+            "stats": {
+                "min": 1.0,
+                "lower_quartile": 1.0,
+                "median": 2.0,
+                "upper_quartile": 1.0,
+                "max": 3.0
+            },
+            "values": [{
+                "id": "ERR424756",
+                "assays": ["ERR424756"],
+                "value": 3.0
+            }, {
+                "id": "ERR424775",
+                "assays": ["ERR424775"],
+                "value": 1.0
+            }]
+        }, {}, {
+            "stats": {
+                "min": 1.0,
+                "lower_quartile": 1.0,
+                "median": 1.5,
+                "upper_quartile": 1.0,
+                "max": 2.0
+            },
+            "values": [{
+                "id": "ERR424753",
+                "assays": ["ERR424753"],
+                "value": 2.0
+            }, {
+                "id": "t3",
+                "assays": ["ERR424735", "ERR424741"],
+                "value": 1.0
+            }]
+        }, {
+            "stats": {
+                "min": 0.4,
+                "lower_quartile": 0.4,
+                "median": 0.4,
+                "upper_quartile": 0.4,
+                "max": 0.4
+            },
+            "values": [{
+                "id": "t7",
+                "assays": ["ERR424722", "ERR424723", "ERR424744", "ERR424727"],
+                "value": 0.4
+            }]
+        }],
+        "uri": "genes/TRIAE_CS42_1AL_TGACv1_000002_AA0000030.2#information",
+        "expressionUnit": "TPM"
+    }, {
+        "id": "TRIAE_CS42_1AL_TGACv1_000002_AA0000030.3",
+        "name": "TRIAE_CS42_1AL_TGACv1_000002_AA0000030.3",
+        "expressions": [{
+            "stats": {
+                "min": 0.9,
+                "lower_quartile": 0.9,
+                "median": 0.9,
+                "upper_quartile": 0.9,
+                "max": 0.9
+            },
+            "values": [{
+                "id": "ERR424772",
+                "assays": ["ERR424772"],
+                "value": 0.9
+            }]
+        }, {}, {
+            "stats": {
+                "min": 0.1,
+                "lower_quartile": 0.1,
+                "median": 0.1,
+                "upper_quartile": 0.1,
+                "max": 0.1
+            },
+            "values": [{
+                "id": "ERR424777",
+                "assays": ["ERR424777"],
+                "value": 0.1
+            }]
+        }, {
+            "stats": {
+                "min": 0.3,
+                "lower_quartile": 0.3,
+                "median": 0.4,
+                "upper_quartile": 0.3,
+                "max": 0.5
+            },
+            "values": [{
+                "id": "ERR424730",
+                "assays": ["ERR424730"],
+                "value": 0.3
+            }, {
+                "id": "ERR424769",
+                "assays": ["ERR424769"],
+                "value": 0.5
+            }]
+        }, {
+            "stats": {
+                "min": 0.1,
+                "lower_quartile": 0.1,
+                "median": 0.1,
+                "upper_quartile": 0.1,
+                "max": 0.1
+            },
+            "values": [{
+                "id": "t6",
+                "assays": ["ERR424763", "ERR424749"],
+                "value": 0.1
+            }]
+        }, {
+            "stats": {
+                "min": 0.1,
+                "lower_quartile": 0.1,
+                "median": 0.1,
+                "upper_quartile": 0.1,
+                "max": 0.1
+            },
+            "values": [{
+                "id": "ERR424776",
+                "assays": ["ERR424776"],
+                "value": 0.1
+            }]
+        }, {
+            "stats": {
+                "min": 0.4,
+                "lower_quartile": 0.4,
+                "median": 0.4,
+                "upper_quartile": 0.4,
+                "max": 0.4
+            },
+            "values": [{
+                "id": "ERR424758",
+                "assays": ["ERR424758"],
+                "value": 0.4
+            }]
+        }, {
+            "stats": {
+                "min": 0.3,
+                "lower_quartile": 0.3,
+                "median": 0.55,
+                "upper_quartile": 0.3,
+                "max": 0.8
+            },
+            "values": [{
+                "id": "ERR424721",
+                "assays": ["ERR424721"],
+                "value": 0.8
+            }, {
+                "id": "ERR424750",
+                "assays": ["ERR424750"],
+                "value": 0.3
+            }]
+        }, {}, {
+            "stats": {
+                "min": 0.4,
+                "lower_quartile": 0.4,
+                "median": 0.4,
+                "upper_quartile": 0.4,
+                "max": 0.4
+            },
+            "values": [{
+                "id": "ERR424743",
+                "assays": ["ERR424743"],
+                "value": 0.4
+            }]
+        }, {
+            "stats": {
+                "min": 0.1,
+                "lower_quartile": 0.1,
+                "median": 0.1,
+                "upper_quartile": 0.1,
+                "max": 0.1
+            },
+            "values": [{
+                "id": "ERR424728",
+                "assays": ["ERR424728"],
+                "value": 0.1
+            }]
+        }, {
+            "stats": {
+                "min": 0.3,
+                "lower_quartile": 0.3,
+                "median": 0.4,
+                "upper_quartile": 0.3,
+                "max": 0.5
+            },
+            "values": [{
+                "id": "ERR424756",
+                "assays": ["ERR424756"],
+                "value": 0.5
+            }, {
+                "id": "ERR424775",
+                "assays": ["ERR424775"],
+                "value": 0.3
+            }]
+        }, {
+            "stats": {
+                "min": 0.3,
+                "lower_quartile": 0.3,
+                "median": 0.3,
+                "upper_quartile": 0.3,
+                "max": 0.3
+            },
+            "values": [{
+                "id": "ERR424733",
+                "assays": ["ERR424733"],
+                "value": 0.3
+            }]
+        }, {
+            "stats": {
+                "min": 0.4,
+                "lower_quartile": 0.4,
+                "median": 0.45,
+                "upper_quartile": 0.4,
+                "max": 0.5
+            },
+            "values": [{
+                "id": "ERR424753",
+                "assays": ["ERR424753"],
+                "value": 0.4
+            }, {
+                "id": "t3",
+                "assays": ["ERR424735", "ERR424741"],
+                "value": 0.5
+            }]
+        }, {
+            "stats": {
+                "min": 0.1,
+                "lower_quartile": 0.1,
+                "median": 0.1,
+                "upper_quartile": 0.1,
+                "max": 0.1
+            },
+            "values": [{
+                "id": "t7",
+                "assays": ["ERR424722", "ERR424723", "ERR424744", "ERR424727"],
+                "value": 0.1
+            }]
+        }],
+        "uri": "genes/TRIAE_CS42_1AL_TGACv1_000002_AA0000030.3#information",
+        "expressionUnit": "TPM"
+    }, {
+        "id": "TRIAE_CS42_1AL_TGACv1_000002_AA0000030.4",
+        "name": "TRIAE_CS42_1AL_TGACv1_000002_AA0000030.4",
+        "expressions": [{
+            "stats": {
+                "min": 0.1,
+                "lower_quartile": 0.1,
+                "median": 0.15000000000000002,
+                "upper_quartile": 0.1,
+                "max": 0.2
+            },
+            "values": [{
+                "id": "ERR424774",
+                "assays": ["ERR424774"],
+                "value": 0.2
+            }, {
+                "id": "ERR424772",
+                "assays": ["ERR424772"],
+                "value": 0.1
+            }]
+        }, {
+            "stats": {
+                "min": 0.6,
+                "lower_quartile": 0.6,
+                "median": 0.6,
+                "upper_quartile": 0.6,
+                "max": 0.6
+            },
+            "values": [{
+                "id": "ERR424726",
+                "assays": ["ERR424726"],
+                "value": 0.6
+            }]
+        }, {
+            "stats": {
+                "min": 0.2,
+                "lower_quartile": 0.2,
+                "median": 0.35,
+                "upper_quartile": 0.2,
+                "max": 0.5
+            },
+            "values": [{
+                "id": "ERR424777",
+                "assays": ["ERR424777"],
+                "value": 0.2
+            }, {
+                "id": "t9",
+                "assays": ["ERR424770", "ERR424737"],
+                "value": 0.5
+            }]
+        }, {
+            "stats": {
+                "min": 0.3,
+                "lower_quartile": 0.3,
+                "median": 0.3,
+                "upper_quartile": 0.3,
+                "max": 0.3
+            },
+            "values": [{
+                "id": "ERR424769",
+                "assays": ["ERR424769"],
+                "value": 0.3
+            }]
+        }, {
+            "stats": {
+                "min": 0.3,
+                "lower_quartile": 0.3,
+                "median": 0.3,
+                "upper_quartile": 0.3,
+                "max": 0.3
+            },
+            "values": [{
+                "id": "t6",
+                "assays": ["ERR424763", "ERR424749"],
+                "value": 0.3
+            }]
+        }, {}, {
+            "stats": {
+                "min": 0.2,
+                "lower_quartile": 0.2,
+                "median": 0.25,
+                "upper_quartile": 0.2,
+                "max": 0.3
+            },
+            "values": [{
+                "id": "ERR424724",
+                "assays": ["ERR424724"],
+                "value": 0.2
+            }, {
+                "id": "ERR424758",
+                "assays": ["ERR424758"],
+                "value": 0.3
+            }]
+        }, {
+            "stats": {
+                "min": 0.4,
+                "lower_quartile": 0.4,
+                "median": 0.4,
+                "upper_quartile": 0.4,
+                "max": 0.4
+            },
+            "values": [{
+                "id": "ERR424721",
+                "assays": ["ERR424721"],
+                "value": 0.4
+            }]
+        }, {
+            "stats": {
+                "min": 0.3,
+                "lower_quartile": 0.3,
+                "median": 0.3,
+                "upper_quartile": 0.3,
+                "max": 0.3
+            },
+            "values": [{
+                "id": "ERR424739",
+                "assays": ["ERR424739"],
+                "value": 0.3
+            }]
+        }, {}, {
+            "stats": {
+                "min": 0.2,
+                "lower_quartile": 0.2,
+                "median": 0.2,
+                "upper_quartile": 0.2,
+                "max": 0.2
+            },
+            "values": [{
+                "id": "ERR424728",
+                "assays": ["ERR424728"],
+                "value": 0.2
+            }, {
+                "id": "ERR424748",
+                "assays": ["ERR424748"],
+                "value": 0.2
+            }]
+        }, {
+            "stats": {
+                "min": 0.5,
+                "lower_quartile": 0.5,
+                "median": 0.75,
+                "upper_quartile": 0.5,
+                "max": 1.0
+            },
+            "values": [{
+                "id": "ERR424756",
+                "assays": ["ERR424756"],
+                "value": 1.0
+            }, {
+                "id": "ERR424775",
+                "assays": ["ERR424775"],
+                "value": 0.5
+            }]
+        }, {}, {
+            "stats": {
+                "min": 0.4,
+                "lower_quartile": 0.4,
+                "median": 0.4,
+                "upper_quartile": 0.4,
+                "max": 0.4
+            },
+            "values": [{
+                "id": "t3",
+                "assays": ["ERR424735", "ERR424741"],
+                "value": 0.4
+            }]
+        }, {}],
+        "uri": "genes/TRIAE_CS42_1AL_TGACv1_000002_AA0000030.4#information",
+        "expressionUnit": "TPM"
+    }, {
+        "id": "TRIAE_CS42_1AL_TGACv1_000002_AA0000030.5",
+        "name": "TRIAE_CS42_1AL_TGACv1_000002_AA0000030.5",
+        "expressions": [{
+            "stats": {
+                "min": 1.0,
+                "lower_quartile": 1.0,
+                "median": 1.0,
+                "upper_quartile": 1.0,
+                "max": 1.0
+            },
+            "values": [{
+                "id": "ERR424774",
+                "assays": ["ERR424774"],
+                "value": 1.0
+            }, {
+                "id": "ERR424772",
+                "assays": ["ERR424772"],
+                "value": 1.0
+            }]
+        }, {
+            "stats": {
+                "min": 1.0,
+                "lower_quartile": 1.0,
+                "median": 1.0,
+                "upper_quartile": 1.0,
+                "max": 1.0
+            },
+            "values": [{
+                "id": "ERR424765",
+                "assays": ["ERR424765"],
+                "value": 1.0
+            }, {
+                "id": "ERR424726",
+                "assays": ["ERR424726"],
+                "value": 1.0
+            }]
+        }, {
+            "stats": {
+                "min": 0.8,
+                "lower_quartile": 0.8,
+                "median": 1.4,
+                "upper_quartile": 0.8,
+                "max": 2.0
+            },
+            "values": [{
+                "id": "ERR424777",
+                "assays": ["ERR424777"],
+                "value": 2.0
+            }, {
+                "id": "t9",
+                "assays": ["ERR424770", "ERR424737"],
+                "value": 0.8
+            }]
+        }, {
+            "stats": {
+                "min": 2.0,
+                "lower_quartile": 2.0,
+                "median": 2.5,
+                "upper_quartile": 2.0,
+                "max": 3.0
+            },
+            "values": [{
+                "id": "ERR424730",
+                "assays": ["ERR424730"],
+                "value": 3.0
+            }, {
+                "id": "ERR424769",
+                "assays": ["ERR424769"],
+                "value": 2.0
+            }]
+        }, {
+            "stats": {
+                "min": 1.0,
+                "lower_quartile": 1.0,
+                "median": 1.0,
+                "upper_quartile": 1.0,
+                "max": 1.0
+            },
+            "values": [{
+                "id": "t6",
+                "assays": ["ERR424763", "ERR424749"],
+                "value": 1.0
+            }, {
+                "id": "ERR424754",
+                "assays": ["ERR424754"],
+                "value": 1.0
+            }]
+        }, {
+            "stats": {
+                "min": 0.9,
+                "lower_quartile": 0.9,
+                "median": 0.9,
+                "upper_quartile": 0.9,
+                "max": 0.9
+            },
+            "values": [{
+                "id": "ERR424776",
+                "assays": ["ERR424776"],
+                "value": 0.9
+            }, {
+                "id": "t2",
+                "assays": ["ERR424751", "ERR424734"],
+                "value": 0.9
+            }]
+        }, {
+            "stats": {
+                "min": 3.0,
+                "lower_quartile": 3.0,
+                "median": 3.5,
+                "upper_quartile": 3.0,
+                "max": 4.0
+            },
+            "values": [{
+                "id": "ERR424724",
+                "assays": ["ERR424724"],
+                "value": 3.0
+            }, {
+                "id": "ERR424758",
+                "assays": ["ERR424758"],
+                "value": 4.0
+            }]
+        }, {
+            "stats": {
+                "min": 6.0,
+                "lower_quartile": 6.0,
+                "median": 6.0,
+                "upper_quartile": 6.0,
+                "max": 6.0
+            },
+            "values": [{
+                "id": "ERR424721",
+                "assays": ["ERR424721"],
+                "value": 6.0
+            }, {
+                "id": "ERR424750",
+                "assays": ["ERR424750"],
+                "value": 6.0
+            }]
+        }, {
+            "stats": {
+                "min": 1.0,
+                "lower_quartile": 1.0,
+                "median": 1.5,
+                "upper_quartile": 1.0,
+                "max": 2.0
+            },
+            "values": [{
+                "id": "ERR424762",
+                "assays": ["ERR424762"],
+                "value": 2.0
+            }, {
+                "id": "ERR424739",
+                "assays": ["ERR424739"],
+                "value": 1.0
+            }]
+        }, {
+            "stats": {
+                "min": 1.0,
+                "lower_quartile": 1.0,
+                "median": 1.0,
+                "upper_quartile": 1.0,
+                "max": 1.0
+            },
+            "values": [{
+                "id": "ERR424743",
+                "assays": ["ERR424743"],
+                "value": 1.0
+            }]
+        }, {
+            "stats": {
+                "min": 2.0,
+                "lower_quartile": 2.0,
+                "median": 2.5,
+                "upper_quartile": 2.0,
+                "max": 3.0
+            },
+            "values": [{
+                "id": "ERR424728",
+                "assays": ["ERR424728"],
+                "value": 2.0
+            }, {
+                "id": "ERR424748",
+                "assays": ["ERR424748"],
+                "value": 3.0
+            }]
+        }, {
+            "stats": {
+                "min": 3.0,
+                "lower_quartile": 3.0,
+                "median": 3.0,
+                "upper_quartile": 3.0,
+                "max": 3.0
+            },
+            "values": [{
+                "id": "ERR424756",
+                "assays": ["ERR424756"],
+                "value": 3.0
+            }, {
+                "id": "ERR424775",
+                "assays": ["ERR424775"],
+                "value": 3.0
+            }]
+        }, {
+            "stats": {
+                "min": 2.0,
+                "lower_quartile": 2.0,
+                "median": 2.0,
+                "upper_quartile": 2.0,
+                "max": 2.0
+            },
+            "values": [{
+                "id": "ERR424733",
+                "assays": ["ERR424733"],
+                "value": 2.0
+            }, {
+                "id": "ERR424767",
+                "assays": ["ERR424767"],
+                "value": 2.0
+            }]
+        }, {
+            "stats": {
+                "min": 4.0,
+                "lower_quartile": 4.0,
+                "median": 4.0,
+                "upper_quartile": 4.0,
+                "max": 4.0
+            },
+            "values": [{
+                "id": "ERR424753",
+                "assays": ["ERR424753"],
+                "value": 4.0
+            }, {
+                "id": "t3",
+                "assays": ["ERR424735", "ERR424741"],
+                "value": 4.0
+            }]
+        }, {
+            "stats": {
+                "min": 1.0,
+                "lower_quartile": 1.0,
+                "median": 1.5,
+                "upper_quartile": 1.0,
+                "max": 2.0
+            },
+            "values": [{
+                "id": "t7",
+                "assays": ["ERR424722", "ERR424723", "ERR424744", "ERR424727"],
+                "value": 1.0
+            }, {
+                "id": "ERR424732",
+                "assays": ["ERR424732"],
+                "value": 2.0
+            }]
+        }],
+        "uri": "genes/TRIAE_CS42_1AL_TGACv1_000002_AA0000030.5#information",
+        "expressionUnit": "TPM"
+    }, {
+        "id": "TRIAE_CS42_1AL_TGACv1_000002_AA0000030.6",
+        "name": "TRIAE_CS42_1AL_TGACv1_000002_AA0000030.6",
+        "expressions": [{
+            "stats": {
+                "min": 0.1,
+                "lower_quartile": 0.1,
+                "median": 0.1,
+                "upper_quartile": 0.1,
+                "max": 0.1
+            },
+            "values": [{
+                "id": "ERR424774",
+                "assays": ["ERR424774"],
+                "value": 0.1
+            }]
+        }, {
+            "stats": {
+                "min": 0.3,
+                "lower_quartile": 0.3,
+                "median": 0.3,
+                "upper_quartile": 0.3,
+                "max": 0.3
+            },
+            "values": [{
+                "id": "ERR424765",
+                "assays": ["ERR424765"],
+                "value": 0.3
+            }, {
+                "id": "ERR424726",
+                "assays": ["ERR424726"],
+                "value": 0.3
+            }]
+        }, {}, {
+            "stats": {
+                "min": 0.9,
+                "lower_quartile": 0.9,
+                "median": 0.9,
+                "upper_quartile": 0.9,
+                "max": 0.9
+            },
+            "values": [{
+                "id": "ERR424769",
+                "assays": ["ERR424769"],
+                "value": 0.9
+            }]
+        }, {
+            "stats": {
+                "min": 2.0,
+                "lower_quartile": 2.0,
+                "median": 2.0,
+                "upper_quartile": 2.0,
+                "max": 2.0
+            },
+            "values": [{
+                "id": "ERR424754",
+                "assays": ["ERR424754"],
+                "value": 2.0
+            }]
+        }, {
+            "stats": {
+                "min": 0.4,
+                "lower_quartile": 0.4,
+                "median": 0.7,
+                "upper_quartile": 0.4,
+                "max": 1.0
+            },
+            "values": [{
+                "id": "ERR424776",
+                "assays": ["ERR424776"],
+                "value": 1.0
+            }, {
+                "id": "t2",
+                "assays": ["ERR424751", "ERR424734"],
+                "value": 0.4
+            }]
+        }, {
+            "stats": {
+                "min": 0.3,
+                "lower_quartile": 0.3,
+                "median": 0.3,
+                "upper_quartile": 0.3,
+                "max": 0.3
+            },
+            "values": [{
+                "id": "ERR424758",
+                "assays": ["ERR424758"],
+                "value": 0.3
+            }]
+        }, {
+            "stats": {
+                "min": 0.5,
+                "lower_quartile": 0.5,
+                "median": 0.5,
+                "upper_quartile": 0.5,
+                "max": 0.5
+            },
+            "values": [{
+                "id": "ERR424721",
+                "assays": ["ERR424721"],
+                "value": 0.5
+            }]
+        }, {
+            "stats": {
+                "min": 0.4,
+                "lower_quartile": 0.4,
+                "median": 0.4,
+                "upper_quartile": 0.4,
+                "max": 0.4
+            },
+            "values": [{
+                "id": "ERR424739",
+                "assays": ["ERR424739"],
+                "value": 0.4
+            }]
+        }, {
+            "stats": {
+                "min": 1.0,
+                "lower_quartile": 1.0,
+                "median": 1.0,
+                "upper_quartile": 1.0,
+                "max": 1.0
+            },
+            "values": [{
+                "id": "ERR424743",
+                "assays": ["ERR424743"],
+                "value": 1.0
+            }]
+        }, {}, {
+            "stats": {
+                "min": 1.0,
+                "lower_quartile": 1.0,
+                "median": 1.0,
+                "upper_quartile": 1.0,
+                "max": 1.0
+            },
+            "values": [{
+                "id": "ERR424756",
+                "assays": ["ERR424756"],
+                "value": 1.0
+            }]
+        }, {
+            "stats": {
+                "min": 0.8,
+                "lower_quartile": 0.8,
+                "median": 0.8,
+                "upper_quartile": 0.8,
+                "max": 0.8
+            },
+            "values": [{
+                "id": "ERR424733",
+                "assays": ["ERR424733"],
+                "value": 0.8
+            }]
+        }, {
+            "stats": {
+                "min": 0.3,
+                "lower_quartile": 0.3,
+                "median": 0.3,
+                "upper_quartile": 0.3,
+                "max": 0.3
+            },
+            "values": [{
+                "id": "t3",
+                "assays": ["ERR424735", "ERR424741"],
+                "value": 0.3
+            }]
+        }, {
+            "stats": {
+                "min": 4.0,
+                "lower_quartile": 4.0,
+                "median": 4.0,
+                "upper_quartile": 4.0,
+                "max": 4.0
+            },
+            "values": [{
+                "id": "t7",
+                "assays": ["ERR424722", "ERR424723", "ERR424744", "ERR424727"],
+                "value": 4.0
+            }]
+        }],
+        "uri": "genes/TRIAE_CS42_1AL_TGACv1_000002_AA0000030.6#information",
+        "expressionUnit": "TPM"
+    }]
+}

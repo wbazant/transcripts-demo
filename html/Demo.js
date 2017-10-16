@@ -1,69 +1,93 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import ExperimentPageView from '../src/index'
+import Main from '../src/index'
+import URI from 'urijs'
+import cannedJson from './canned.json'
+
+import xhrRequest from 'xhr-request'
+
+
+// doesn't work
+const fetchResponseJson = async (url, cb) => {
+  return cb(cannedJson)
+  const response = await fetch(url,{mode: "no-cors"} )
+  const responseJson = await response.json()
+  cb(responseJson)
+}
+
+const ourUrl = (base, experiment, gene) => (
+    URI(`debug/json/experiments/${experiment}/genes/${gene}/transcripts?type=RNASEQ_MRNA_BASELINE`, base).toString()
+)
 
 class Demo extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      k: 2,
-      perplexity: 1,
-      geneId: ``,
-      inputHighlightClusters: ``,
-      highlightClusters: []
+      experimentAccession:"E-MTAB-4484",
+      geneId:"TRIAE_CS42_1AL_TGACv1_000002_AA0000030",
+      url:``,
+      loading: false,
+      data:{}
     }
 
-    this._handleChange = this._handleChange.bind(this)
+    this._handleChangeExperiment = this._handleChangeExperiment.bind(this)
+    this._handleChangeGeneId = this._handleChangeGeneId.bind(this)
     this._handleSubmit = this._handleSubmit.bind(this)
   }
 
-  _handleChange(event) {
+  _handleChangeExperiment(event) {
     this.setState({
-      inputHighlightClusters: event.target.value
+      experimentAccession: event.target.value
+    })
+  }
+  _handleChangeGeneId(event) {
+    this.setState({
+      geneId: event.target.value
     })
   }
 
   _handleSubmit(event) {
     event.preventDefault()
+    const url = ourUrl("https://www-test.ebi.ac.uk/gxa/", this.state.experimentAccession, this.state.geneId)
 
     this.setState({
-      highlightClusters: this.state.inputHighlightClusters.split(`,`).map((e) => e.trim()).filter((e) => e.length)
-    })
+      url: url,
+      loading:true,
+  }, fetchResponseJson.bind(this, url, (data) => this.setState({data:data, loading: false})))
   }
 
-  
+
 
   render() {
     return(
       <div className={`row column`}>
         <div className={`row column`}>
           <form onSubmit={this._handleSubmit}>
-            <label>Highlight clusters (cluster integer IDs separated by commas):</label>
-            <input type={`text`} onChange={this._handleChange} value={this.state.inputHighlightClusters}/>
-            <input className={`button`} type="submit" value="Submit" />
+            <label>Experiment</label>
+            <input type={`text`} onChange={this._handleChangeExperiment} value={this.state.experimentAccession}/>
+            <label>Gene id</label>
+            <input type={`text`} onChange={this._handleChangeGeneId} value={this.state.geneId}/>
+            <input className={`button`} type="submit" value="Go!" />
           </form>
         </div>
 
-        <ExperimentPageView atlasUrl={`http://localhost:8080/gxa_sc/`}
-                            suggesterEndpoint={`json/suggestions`}
-                            experimentAccession={`E-MTAB-4388`}
-                            perplexities={[1, 2, 3, 4, 5, 6]}
-                            perplexity={this.state.perplexity}
-                            ks={[2, 3, 4, 5, 6, 7, 8, 9, 10]}
-                            k={this.state.k}
-                            highlightClusters={this.state.highlightClusters}
-                            geneId={this.state.geneId}
-                            onChangePerplexity={
-                              (perplexity) => { this.setState({perplexity: perplexity}) }
-                            }
-                            onChangeK={
-                              (k) => { this.setState({k: k}) }
-                            }
-                            onSelectGeneId={
-                              (geneId) => { this.setState({geneId: geneId}) }
-                            }
-        />
+        { this.state.loading
+            ?  `Loading from ${this.state.url} ...`
+            : this.state.url
+                ? <div>
+                        <i>
+                        Reading from:
+                        {this.state.url}
+                        </i>
+                        <br/>
+                        <Main {...this.state.data}
+
+                        />
+                    </div>
+                : ""
+
+        }
       </div>
     )
   }
