@@ -11,15 +11,13 @@ import ReactSelect from 'react-select'
 import 'react-select/dist/react-select.css';
 
 
-// export default JSON.stringify
-
 const highcharts = ({xAxisCategories, dataSeries}) => ({
     chart: {
         type: 'boxplot'
     },
 
     title: {
-        text: 'Highcharts box plot styling'
+        text: ''
     },
 
     legend: {
@@ -40,45 +38,16 @@ const highcharts = ({xAxisCategories, dataSeries}) => ({
     ,
 
     plotOptions: {
-        boxplot: {
-            fillColor: '#F0F0E0',
-            lineWidth: 2,
-            medianColor: '#0C5DA5',
-            medianWidth: 3,
-            stemColor: '#A63400',
-            stemDashStyle: 'dot',
-            stemWidth: 1,
-            whiskerColor: '#3D9200',
-            whiskerLength: '20%',
-            whiskerWidth: 3
-        }
     },
 
     series: dataSeries
 })
-
-const cannedHighcharts = highcharts({xAxisCategories: ['1', '2'],dataSeries : [{
-	name: 'Observations',
-	data: [
-		[10, 20, 30, 40, 50],
-		[1, 2, 3, 4, 5]
-	]
-},
-		{
-	name: 'Observations2',
-	data: [
-		[360, 801, 848, 895, 965],
-		[733, 853, 939, 980, 1080]
-	]
-}]})
-
 
 const SelectTranscripts = ({rowNames,currentRowNames, onChangeCurrentRowNames}) => (
 	<ReactSelect
 	name=""
 	options={rowNames.map(name => ({label:name, value:name}))}
 	multi={true}
-	placeholder="Select your favourite(s)"
 	onChange={x => {onChangeCurrentRowNames(x.map(xx=> xx.value))}}
 	value={currentRowNames}
 	/>
@@ -86,9 +55,9 @@ const SelectTranscripts = ({rowNames,currentRowNames, onChangeCurrentRowNames}) 
 const Chart = ({rows}) => (
 	<div>
 		<div key={`chart`}>
-	      <ReactHighcharts config={highcharts({
+	      {rows.length && <ReactHighcharts config={highcharts({
 			  xAxisCategories: rows[0].expressions.map((e, ix) => "g"+ix),
-			  dataSeries: rows.slice(0,3).map(({id, name, expressions}) => ({
+			  dataSeries: rows.map(({id, name, expressions}) => ({
 				  name: id,
 				  data: expressions.map(
 							  ({values, stats}) =>(
@@ -97,13 +66,16 @@ const Chart = ({rows}) => (
 						  : []
 					  ))
 			  }))
-		  })}/>
+		  })}/>}
 	    </div>
 	</div>
 )
 
 const _ChartWithSwitcher = ({rows,currentRows, defaultCurrentRows, onChangeCurrentRows}) => (
 	<div>
+	<h3>
+		Show data for transcripts:
+	</h3>
 	 <SelectTranscripts
 			rowNames={rows.map(row => row.id)}
 			currentRowNames={currentRows.map(row => row.id)}
