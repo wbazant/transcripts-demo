@@ -2,21 +2,24 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Main from '../src/index'
 import URI from 'urijs'
-import cannedJson from './canned.json'
+import cannedProfiles from './canned.json'
+const cannedJson = {
+    columnHeaders: [{"id":"g1"},{"id":"g2"},{"id":"g3"},{"id":"g4"},{"id":"g5"},{"id":"g6"},{"id":"g7"},{"id":"g8"},{"id":"g9"},{"id":"g10"},{"id":"g11"},{"id":"g12"},{"id":"g13"},{"id":"g14"},{"id":"g15"}],
+    profiles: cannedProfiles
+}
 
 import xhrRequest from 'xhr-request'
 
 
-// doesn't work
 const fetchResponseJson = async (url, cb) => {
-  return cb(cannedJson)
-  const response = await fetch(url,{mode: "no-cors"} )
+  //return cb(cannedJson)
+  const response = await fetch(url)
   const responseJson = await response.json()
   cb(responseJson)
 }
 
 const ourUrl = (base, experiment, gene) => (
-    URI(`debug/json/experiments/${experiment}/genes/${gene}/transcripts?type=RNASEQ_MRNA_BASELINE`, base).toString()
+    URI(`json/debug-experiments/${experiment}/genes/${gene}/transcripts?type=RNASEQ_MRNA_BASELINE`, base).toString()
 )
 
 class Demo extends React.Component {

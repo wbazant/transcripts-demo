@@ -52,11 +52,11 @@ const SelectTranscripts = ({rowNames,currentRowNames, onChangeCurrentRowNames}) 
 	value={currentRowNames}
 	/>
 )
-const Chart = ({rows}) => (
+const Chart = ({rows,columnHeaders}) => (
 	<div>
 		<div key={`chart`}>
 	      {rows.length && <ReactHighcharts config={highcharts({
-			  xAxisCategories: rows[0].expressions.map((e, ix) => "g"+ix),
+			  xAxisCategories: columnHeaders.map(({id})=>id),
 			  dataSeries: rows.map(({id, name, expressions}) => ({
 				  name: id,
 				  data: expressions.map(
@@ -71,7 +71,7 @@ const Chart = ({rows}) => (
 	</div>
 )
 
-const _ChartWithSwitcher = ({rows,currentRows, defaultCurrentRows, onChangeCurrentRows}) => (
+const _ChartWithSwitcher = ({columnHeaders,rows,currentRows, defaultCurrentRows, onChangeCurrentRows}) => (
 	<div>
 	<h3>
 		Show data for transcripts:
@@ -81,15 +81,15 @@ const _ChartWithSwitcher = ({rows,currentRows, defaultCurrentRows, onChangeCurre
 			currentRowNames={currentRows.map(row => row.id)}
 			onChangeCurrentRowNames={(rowNames) => { return onChangeCurrentRows(rows.filter(row => rowNames.includes(row.id)))}}
 	/>
-	<Chart rows={currentRows} />
+	<Chart rows={currentRows} columnHeaders={columnHeaders} />
 	</div>
 )
 
 const ChartWithSwitcher = uncontrollable(_ChartWithSwitcher, {currentRows: "onChangeCurrentRows"})
 
-const Main = ({rows}) => (
+const Main = ({columnHeaders, profiles:{rows}}) => (
 	<div>
-		<ChartWithSwitcher rows={rows} defaultCurrentRows={rows}  />
+		<ChartWithSwitcher columnHeaders={columnHeaders} rows={rows} defaultCurrentRows={rows}  />
 	</div>
 )
 
