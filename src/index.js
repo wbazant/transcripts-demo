@@ -11,7 +11,7 @@ import ReactSelect from 'react-select'
 import 'react-select/dist/react-select.css';
 
 
-const highcharts = ({xAxisCategories, dataSeries}) => ({
+const scatterPlotConfig = ({xAxisCategories, dataSeries,useLogarithmicAxis}) => ({
     chart: {
         type: 'boxplot',
 		zoomType: 'x'
@@ -40,7 +40,7 @@ const highcharts = ({xAxisCategories, dataSeries}) => ({
         title: {
             text: 'Expression (TPM)'
         },
-		type:'logarithmic',
+		type: useLogarithmicAxis?'logarithmic':'',
 		min:0.1
 	}
     ,
@@ -60,24 +60,70 @@ const SelectTranscripts = ({rowNames,currentRowNames, onChangeCurrentRowNames}) 
 	value={currentRowNames}
 	/>
 )
-const Chart = ({rows,columnHeaders}) => (
-	<div>
-		<div key={`chart`}>
-	      {rows.length && <ReactHighcharts config={highcharts({
-			  xAxisCategories: columnHeaders.map(({id})=>id),
-			  dataSeries: rows.map(({id, name, expressions}) => ({
-				  name: id,
-				  data: expressions.map(
-							  ({values, stats}) =>(
-						  stats
-						  ? [stats.min, stats.lower_quartile, stats.median, stats.upper_quartile, stats.max]
-						  : []
-					  ))
-			  }))
-		  })}/>}
-	    </div>
+
+const BoxPlot = ({rows,columnHeaders,useLogarithmicAxis}) => (
+	<div key={`chart`}>
+	  {rows.length && <ReactHighcharts config={scatterPlotConfig({
+		  useLogarithmicAxis,
+		  xAxisCategories: columnHeaders.map(({id})=>id),
+		  dataSeries: rows.map(({id, name, expressions}) => ({
+			  name: id,
+			  data: expressions.map(
+						  ({values, stats}) =>(
+					  stats
+					  ? [stats.min, stats.lower_quartile, stats.median, stats.upper_quartile, stats.max]
+					  : []
+				  ))
+		  }))
+	  })}/>}
 	</div>
 )
+const DISPLAY_PLOT_TYPE = {
+	BOX:1, SCATTER:2
+}
+const _Chart = ({rows,columnHeaders,toDisplay, onChangeToDisplay,useLogarithmicAxis,onChangeUseLogarithmicAxis}) => (
+	<div>
+	<br/>
+	<div>
+		<span className="switch">
+			<input className="switch-input" id="a" type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.BOX} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.BOX)}  name="s"/>
+			<label className="switch-paddle" htmlFor="a">
+			</label>
+		</span>
+		<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Display boxplot</span>
+	</div>
+	<div>
+		<span className="switch">
+			<input className="switch-input" id="b" type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.SCATTER} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.SCATTER)} name="s"/>
+			<label className="switch-paddle" htmlFor="b">
+			</label>
+		</span>
+		<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Display scatter plot</span>
+	</div>
+	<br/>
+	<div>
+		<span className="switch">
+			<input className="switch-input" id="c" type="checkbox" checked={useLogarithmicAxis} onChange={onChangeUseLogarithmicAxis.bind(this, !useLogarithmicAxis)} name="s"/>
+			<label className="switch-paddle" htmlFor="c">
+			</label>
+		</span>
+		<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Use logarithmic axis</span>
+	</div>
+		<div style={toDisplay == DISPLAY_PLOT_TYPE.BOX ? {} : {display: "none"}}>
+			{BoxPlot({rows,columnHeaders,useLogarithmicAxis})}
+		</div>
+		<div style={toDisplay == DISPLAY_PLOT_TYPE.SCATTER ? {} : {display: "none"}}>
+			TODO
+		</div>
+	</div>
+)
+
+const Chart = uncontrollable(_Chart, {toDisplay: 'onChangeToDisplay',useLogarithmicAxis:'onChangeUseLogarithmicAxis' })
+
+Chart.defaultProps = {
+	defaultToDisplay: DISPLAY_PLOT_TYPE.BOX,
+	defaultUseLogarithmicAxis:true,
+}
 
 const _ChartWithSwitcher = ({columnHeaders,rows,currentRows, defaultCurrentRows, onChangeCurrentRows}) => (
 	<div>
