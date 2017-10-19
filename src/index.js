@@ -60,8 +60,8 @@ const scatterPlotConfig = ({xAxisCategories, dataSeries,useLogarithmicAxis}) => 
 		lineColor: ReactHighcharts.Highcharts.getOptions().colors[0]
 	},
 	tooltip: {
-		pointFormat: '_Assay id_ {point.y}'
-	}
+        pointFormat: 'Expression: {point.y} TPM <br/> Assay:  {point.info.assays}'
+    }
 })
 
 const SelectTranscripts = ({rowNames,currentRowNames, onChangeCurrentRowNames}) => (
@@ -92,35 +92,6 @@ const BoxPlot = ({rows,columnHeaders,useLogarithmicAxis}) => (
 	</div>
 )
 
-/*
-TODO data series:)
-- expression value as y
-- scatter is a property of the data series, on a boxplot plot
-series: [{
-        name: 'TRIAE_CS42_3B_TGACv1_223660_AA0785210.1 expression',
-        data: [
-            [0,0,0.1,0.1,0.2 ],[2,4,6,7,9 ],[7,8,8,8,8 ],[7,7,8,8,8 ],[0,0,0,0,0 ],[1,1,1,1,1 ],[0.1,0.1,0.1,0.1,0.1 ],[13,13,13,14,14 ],[0,0,0,0.1,0.1 ],[7,7,7,7,7 ],[5,6,7,8,9 ],[8,8,8,8,8 ],[0,0,0,0,0 ],[0,0,0.1,0.1,0.1 ],[6,6,7,8,9]
-        ],
-        tooltip: {
-            headerFormat: '<em> Quantile normalized data {point.key}</em><br/>'
-        }
-    }, {
-        name: '',
-        color: Highcharts.getOptions().colors[0],
-        type: 'scatter',
-        data: [ // x, y positions where 0 is the first category
-           [0,8.51],[0,8.6],[0,1.38],[0,7.49],[0,0],[0,1.14],[0,0],[0,0],[0,2.32],[0,6.95],[0,7.7],[0,0.16],[0,0],[0,1.32],[0,7.63],[1,8.51],[1,2.32],[2,7.49],[2,7.7],[2,7.63],[3,8.6],[3,6.95],[4,0],[4,0],[4,0],[5,1.38],[5,1.14],[5,1.32],[6,13.07],[6,0.13],[6,13.86],[6,0.11],[7,13.07],[7,13.86],[8,0],[8,0.09],[9,6.97],[10,8.62],[10,4.84],[11,8.39],[11,8],[12,0],[12,0],[13,0],[13,0.25],[13,0],[14,5.22],[14,8.78],[14,8.4],[14,5.73],[14,9.41]
-        ],
-        marker: {
-            lineWidth: 1,
-            lineColor: Highcharts.getOptions().colors[0]
-        },
-        tooltip: {
-            pointFormat: '_Assay id_ {point.y}'
-        }
-    }]
-
-*/
 const ScatterPlot = ({rows,columnHeaders,useLogarithmicAxis}) => (
 	<div key={`scatterPlot`}>
 	  {rows.length && <ReactHighcharts config={scatterPlotConfig({
@@ -135,7 +106,11 @@ const ScatterPlot = ({rows,columnHeaders,useLogarithmicAxis}) => (
 				  	values
 				  	? values
 						.filter(({value})=> !useLogarithmicAxis || value >0)
-						.map(({value})=>[ix, value])
+						.map(({value, id, assays})=>({
+							x:ix,
+							y:value,
+							info: {id, assays}
+						}))
 				  	: []
 				)))
 		  }))
