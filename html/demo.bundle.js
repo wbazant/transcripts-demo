@@ -11554,10 +11554,8 @@ exports.render = render;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(10);
 
@@ -11591,413 +11589,287 @@ __webpack_require__(387);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
 (0, _highchartsMore2.default)(_reactHighcharts2.default.Highcharts);
 
 
-var highcharts = function highcharts(_ref) {
-  var xAxisCategories = _ref.xAxisCategories,
-      dataSeries = _ref.dataSeries;
-  return {
-    chart: {
-      type: 'boxplot'
-    },
+var baseConfig = function baseConfig(_ref) {
+	var xAxisCategories = _ref.xAxisCategories,
+	    useLogarithmicAxis = _ref.useLogarithmicAxis;
+	return {
+		chart: {
+			type: 'boxplot',
+			zoomType: 'x'
+		},
+		title: {
+			text: ''
+		},
 
-    title: {
-      text: ''
-    },
+		credits: {
+			enabled: false
+		},
 
-    legend: {
-      enabled: true
-    },
+		legend: {
+			enabled: true
+		},
 
-    xAxis: {
-      categories: xAxisCategories,
-      title: {
-        text: 'Assay group'
-      }
-    },
+		xAxis: {
+			categories: xAxisCategories,
+			title: {
+				text: 'Assay group'
+			}
+		},
 
-    yAxis: [{
-      title: {
-        text: 'Expression value'
-      } }],
+		yAxis: {
+			title: {
+				text: 'Expression (TPM)'
+			},
+			type: useLogarithmicAxis ? 'logarithmic' : '',
+			min: 0.1
+		},
 
-    plotOptions: {},
-
-    series: dataSeries
-  };
+		plotOptions: {}
+	};
+};
+var boxPlotConfig = function boxPlotConfig(_ref2) {
+	var xAxisCategories = _ref2.xAxisCategories,
+	    dataSeries = _ref2.dataSeries,
+	    useLogarithmicAxis = _ref2.useLogarithmicAxis;
+	return Object.assign(baseConfig({ xAxisCategories: xAxisCategories, useLogarithmicAxis: useLogarithmicAxis }), {
+		series: dataSeries
+	});
 };
 
-var SelectTranscripts = function SelectTranscripts(_ref2) {
-  var rowNames = _ref2.rowNames,
-      currentRowNames = _ref2.currentRowNames,
-      onChangeCurrentRowNames = _ref2.onChangeCurrentRowNames;
-  return _react2.default.createElement(_reactSelect2.default, {
-    name: '',
-    options: rowNames.map(function (name) {
-      return { label: name, value: name };
-    }),
-    multi: true,
-    onChange: function onChange(x) {
-      onChangeCurrentRowNames(x.map(function (xx) {
-        return xx.value;
-      }));
-    },
-    value: currentRowNames
-  });
-};
-var Chart = function Chart(_ref3) {
-  var rows = _ref3.rows,
-      columnHeaders = _ref3.columnHeaders;
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'div',
-      { key: 'chart' },
-      rows.length && _react2.default.createElement(_reactHighcharts2.default, { config: highcharts({
-          xAxisCategories: columnHeaders.map(function (_ref4) {
-            var id = _ref4.id;
-            return id;
-          }),
-          dataSeries: rows.map(function (_ref5) {
-            var id = _ref5.id,
-                name = _ref5.name,
-                expressions = _ref5.expressions;
-            return {
-              name: id,
-              data: expressions.map(function (_ref6) {
-                var values = _ref6.values,
-                    stats = _ref6.stats;
-                return stats ? [stats.min, stats.lower_quartile, stats.median, stats.upper_quartile, stats.max] : [];
-              })
-            };
-          })
-        }) })
-    )
-  );
+var scatterPlotConfig = function scatterPlotConfig(_ref3) {
+	var xAxisCategories = _ref3.xAxisCategories,
+	    dataSeries = _ref3.dataSeries,
+	    useLogarithmicAxis = _ref3.useLogarithmicAxis;
+	return Object.assign(baseConfig({ xAxisCategories: xAxisCategories, useLogarithmicAxis: useLogarithmicAxis }), {
+		series: dataSeries,
+		marker: {
+			lineWidth: 1,
+			lineColor: _reactHighcharts2.default.Highcharts.getOptions().colors[0]
+		},
+		tooltip: {
+			pointFormat: 'Expression: {point.y} TPM <br/> Assay:  {point.info.assays}'
+		}
+	});
 };
 
-var _ChartWithSwitcher = function _ChartWithSwitcher(_ref7) {
-  var columnHeaders = _ref7.columnHeaders,
-      rows = _ref7.rows,
-      currentRows = _ref7.currentRows,
-      defaultCurrentRows = _ref7.defaultCurrentRows,
-      onChangeCurrentRows = _ref7.onChangeCurrentRows;
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'h3',
-      null,
-      'Show data for transcripts:'
-    ),
-    _react2.default.createElement(SelectTranscripts, {
-      rowNames: rows.map(function (row) {
-        return row.id;
-      }),
-      currentRowNames: currentRows.map(function (row) {
-        return row.id;
-      }),
-      onChangeCurrentRowNames: function onChangeCurrentRowNames(rowNames) {
-        return onChangeCurrentRows(rows.filter(function (row) {
-          return rowNames.includes(row.id);
-        }));
-      }
-    }),
-    _react2.default.createElement(Chart, { rows: currentRows, columnHeaders: columnHeaders })
-  );
+var SelectTranscripts = function SelectTranscripts(_ref4) {
+	var rowNames = _ref4.rowNames,
+	    currentRowNames = _ref4.currentRowNames,
+	    onChangeCurrentRowNames = _ref4.onChangeCurrentRowNames;
+	return _react2.default.createElement(_reactSelect2.default, {
+		name: '',
+		options: rowNames.map(function (name) {
+			return { label: name, value: name };
+		}),
+		multi: true,
+		onChange: function onChange(x) {
+			onChangeCurrentRowNames(x.map(function (xx) {
+				return xx.value;
+			}));
+		},
+		value: currentRowNames
+	});
+};
+
+var BoxPlot = function BoxPlot(_ref5) {
+	var rows = _ref5.rows,
+	    columnHeaders = _ref5.columnHeaders,
+	    useLogarithmicAxis = _ref5.useLogarithmicAxis;
+	return _react2.default.createElement(
+		'div',
+		{ key: 'boxPlot' },
+		rows.length && _react2.default.createElement(_reactHighcharts2.default, { config: boxPlotConfig({
+				useLogarithmicAxis: useLogarithmicAxis,
+				xAxisCategories: columnHeaders.map(function (_ref6) {
+					var id = _ref6.id;
+					return id;
+				}),
+				dataSeries: rows.map(function (_ref7) {
+					var id = _ref7.id,
+					    name = _ref7.name,
+					    expressions = _ref7.expressions;
+					return {
+						name: id,
+						data: expressions.map(function (_ref8) {
+							var values = _ref8.values,
+							    stats = _ref8.stats;
+							return stats ? [stats.min, stats.lower_quartile, stats.median, stats.upper_quartile, stats.max] : [];
+						})
+					};
+				})
+			}) })
+	);
+};
+
+var ScatterPlot = function ScatterPlot(_ref9) {
+	var rows = _ref9.rows,
+	    columnHeaders = _ref9.columnHeaders,
+	    useLogarithmicAxis = _ref9.useLogarithmicAxis;
+	return _react2.default.createElement(
+		'div',
+		{ key: 'scatterPlot' },
+		rows.length && _react2.default.createElement(_reactHighcharts2.default, { config: scatterPlotConfig({
+				useLogarithmicAxis: useLogarithmicAxis,
+				xAxisCategories: columnHeaders.map(function (_ref10) {
+					var id = _ref10.id;
+					return id;
+				}),
+				dataSeries: rows.map(function (_ref11) {
+					var id = _ref11.id,
+					    name = _ref11.name,
+					    expressions = _ref11.expressions;
+					return {
+						type: 'scatter',
+						name: id,
+						data: [].concat.apply([], expressions.map(function (_ref12, ix) {
+							var values = _ref12.values,
+							    stats = _ref12.stats;
+							return values ? values.filter(function (_ref13) {
+								var value = _ref13.value;
+								return !useLogarithmicAxis || value > 0;
+							}).map(function (_ref14) {
+								var value = _ref14.value,
+								    id = _ref14.id,
+								    assays = _ref14.assays;
+								return {
+									x: ix,
+									y: value,
+									info: { id: id, assays: assays }
+								};
+							}) : [];
+						}))
+					};
+				})
+			}) })
+	);
+};
+var DISPLAY_PLOT_TYPE = {
+	BOX: 1, SCATTER: 2
+};
+var _Chart = function _Chart(_ref15) {
+	var rows = _ref15.rows,
+	    columnHeaders = _ref15.columnHeaders,
+	    toDisplay = _ref15.toDisplay,
+	    onChangeToDisplay = _ref15.onChangeToDisplay,
+	    useLogarithmicAxis = _ref15.useLogarithmicAxis,
+	    onChangeUseLogarithmicAxis = _ref15.onChangeUseLogarithmicAxis;
+	return _react2.default.createElement(
+		'div',
+		null,
+		_react2.default.createElement('br', null),
+		_react2.default.createElement(
+			'div',
+			null,
+			_react2.default.createElement(
+				'span',
+				{ className: 'switch' },
+				_react2.default.createElement('input', { className: 'switch-input', id: 'a', type: 'radio', checked: toDisplay == DISPLAY_PLOT_TYPE.BOX, onChange: onChangeToDisplay.bind(undefined, DISPLAY_PLOT_TYPE.BOX), name: 's' }),
+				_react2.default.createElement('label', { className: 'switch-paddle', htmlFor: 'a' })
+			),
+			_react2.default.createElement(
+				'span',
+				{ style: { margin: "1rem", fontSize: "large", verticalAlign: "top" } },
+				'Expression values: aggregate'
+			)
+		),
+		_react2.default.createElement(
+			'div',
+			null,
+			_react2.default.createElement(
+				'span',
+				{ className: 'switch' },
+				_react2.default.createElement('input', { className: 'switch-input', id: 'b', type: 'radio', checked: toDisplay == DISPLAY_PLOT_TYPE.SCATTER, onChange: onChangeToDisplay.bind(undefined, DISPLAY_PLOT_TYPE.SCATTER), name: 's' }),
+				_react2.default.createElement('label', { className: 'switch-paddle', htmlFor: 'b' })
+			),
+			_react2.default.createElement(
+				'span',
+				{ style: { margin: "1rem", fontSize: "large", verticalAlign: "top" } },
+				'Expression values: per assay'
+			)
+		),
+		_react2.default.createElement('br', null),
+		_react2.default.createElement(
+			'div',
+			null,
+			_react2.default.createElement(
+				'span',
+				{ className: 'switch' },
+				_react2.default.createElement('input', { className: 'switch-input', id: 'c', type: 'checkbox', checked: useLogarithmicAxis, onChange: onChangeUseLogarithmicAxis.bind(undefined, !useLogarithmicAxis), name: 's' }),
+				_react2.default.createElement('label', { className: 'switch-paddle', htmlFor: 'c' })
+			),
+			_react2.default.createElement(
+				'span',
+				{ style: { margin: "1rem", fontSize: "large", verticalAlign: "top" } },
+				'Use logarithmic axis'
+			)
+		),
+		_react2.default.createElement(
+			'div',
+			{ style: toDisplay == DISPLAY_PLOT_TYPE.BOX ? {} : { display: "none" } },
+			BoxPlot({ rows: rows, columnHeaders: columnHeaders, useLogarithmicAxis: useLogarithmicAxis })
+		),
+		_react2.default.createElement(
+			'div',
+			{ style: toDisplay == DISPLAY_PLOT_TYPE.SCATTER ? {} : { display: "none" } },
+			ScatterPlot({ rows: rows, columnHeaders: columnHeaders, useLogarithmicAxis: useLogarithmicAxis })
+		)
+	);
+};
+
+var Chart = (0, _uncontrollable2.default)(_Chart, { toDisplay: 'onChangeToDisplay', useLogarithmicAxis: 'onChangeUseLogarithmicAxis' });
+
+Chart.defaultProps = {
+	defaultToDisplay: DISPLAY_PLOT_TYPE.BOX,
+	defaultUseLogarithmicAxis: true
+};
+
+var _ChartWithSwitcher = function _ChartWithSwitcher(_ref16) {
+	var columnHeaders = _ref16.columnHeaders,
+	    rows = _ref16.rows,
+	    currentRows = _ref16.currentRows,
+	    defaultCurrentRows = _ref16.defaultCurrentRows,
+	    onChangeCurrentRows = _ref16.onChangeCurrentRows;
+	return _react2.default.createElement(
+		'div',
+		null,
+		_react2.default.createElement(
+			'h3',
+			null,
+			'Show data for transcripts:'
+		),
+		_react2.default.createElement(SelectTranscripts, {
+			rowNames: rows.map(function (row) {
+				return row.id;
+			}),
+			currentRowNames: currentRows.map(function (row) {
+				return row.id;
+			}),
+			onChangeCurrentRowNames: function onChangeCurrentRowNames(rowNames) {
+				return onChangeCurrentRows(rows.filter(function (row) {
+					return rowNames.includes(row.id);
+				}));
+			}
+		}),
+		_react2.default.createElement(Chart, { rows: currentRows, columnHeaders: columnHeaders })
+	);
 };
 
 var ChartWithSwitcher = (0, _uncontrollable2.default)(_ChartWithSwitcher, { currentRows: "onChangeCurrentRows" });
 
-var Main = function Main(_ref8) {
-  var columnHeaders = _ref8.columnHeaders,
-      rows = _ref8.profiles.rows;
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(ChartWithSwitcher, { columnHeaders: columnHeaders, rows: rows, defaultCurrentRows: rows })
-  );
+var Main = function Main(_ref17) {
+	var columnHeaders = _ref17.columnHeaders,
+	    rows = _ref17.profiles.rows;
+	return _react2.default.createElement(
+		'div',
+		null,
+		_react2.default.createElement(ChartWithSwitcher, { columnHeaders: columnHeaders, rows: rows, defaultCurrentRows: rows })
+	);
 };
 
 exports.default = Main;
-
-
-var fetchResponseJson = function () {
-  var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(base, endpoint) {
-    var response, responseJson;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            _context.next = 2;
-            return fetch((0, _urijs2.default)(endpoint, base).toString());
-
-          case 2:
-            response = _context.sent;
-            _context.next = 5;
-            return response.json();
-
-          case 5:
-            responseJson = _context.sent;
-            return _context.abrupt('return', responseJson);
-
-          case 7:
-          case 'end':
-            return _context.stop();
-        }
-      }
-    }, _callee, undefined);
-  }));
-
-  return function fetchResponseJson(_x, _x2) {
-    return _ref9.apply(this, arguments);
-  };
-}();
-
-var _Main = function (_React$Component) {
-  _inherits(_Main, _React$Component);
-
-  function _Main(props) {
-    _classCallCheck(this, _Main);
-
-    var _this = _possibleConstructorReturn(this, (_Main.__proto__ || Object.getPrototypeOf(_Main)).call(this, props));
-
-    _this.state = {
-      loaded: false,
-      data: {}
-    };
-    return _this;
-  }
-
-  _createClass(_Main, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          height = _props.height,
-          atlasUrl = _props.atlasUrl,
-          resourcesUrl = _props.resourcesUrl;
-      var _props2 = this.props,
-          suggesterEndpoint = _props2.suggesterEndpoint,
-          geneId = _props2.geneId,
-          highlightClusters = _props2.highlightClusters,
-          ks = _props2.ks,
-          k = _props2.k,
-          perplexities = _props2.perplexities,
-          perplexity = _props2.perplexity;
-      var _props3 = this.props,
-          onChangePerplexity = _props3.onChangePerplexity,
-          onChangeK = _props3.onChangeK,
-          onSelectGeneId = _props3.onSelectGeneId;
-      var _state = this.state,
-          loadingClusters = _state.loadingClusters,
-          loadingGeneExpression = _state.loadingGeneExpression,
-          data = _state.data,
-          errorMessage = _state.errorMessage;
-
-
-      return _react2.default.createElement(
-        'div',
-        { className: 'row' },
-        _react2.default.createElement(
-          'div',
-          { className: 'small-12 medium-6 columns' },
-          _react2.default.createElement(ClusterTSnePlot, { height: height,
-            plotData: data,
-            perplexities: perplexities,
-            perplexity: perplexity,
-            onChangePerplexity: onChangePerplexity,
-            ks: ks,
-            k: k,
-            onChangeK: onChangeK,
-            highlightClusters: highlightClusters,
-            loading: loadingClusters,
-            resourcesUrl: resourcesUrl,
-            errorMessage: errorMessage
-          })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'small-12 medium-6 columns' },
-          _react2.default.createElement(GeneExpressionTSnePlot, { height: height,
-            plotData: data,
-            atlasUrl: atlasUrl,
-            suggesterEndpoint: suggesterEndpoint,
-            onSelectGeneId: onSelectGeneId,
-            geneId: geneId,
-            highlightClusters: highlightClusters,
-            loading: loadingGeneExpression,
-            resourcesUrl: resourcesUrl,
-            errorMessage: errorMessage
-          })
-        )
-      );
-    }
-  }]);
-
-  return _Main;
-}(_react2.default.Component);
-
-var ExperimentPageView = function (_React$Component2) {
-  _inherits(ExperimentPageView, _React$Component2);
-
-  function ExperimentPageView(props) {
-    _classCallCheck(this, ExperimentPageView);
-
-    var _this2 = _possibleConstructorReturn(this, (ExperimentPageView.__proto__ || Object.getPrototypeOf(ExperimentPageView)).call(this, props));
-
-    _this2.state = {
-      data: {
-        series: [],
-        unit: ''
-      },
-      errorMessage: null,
-      loadingClusters: false,
-      loadingGeneExpression: false
-    };
-    return _this2;
-  }
-
-  _createClass(ExperimentPageView, [{
-    key: '_fetchAndSetState',
-    value: function _fetchAndSetState(_ref10) {
-      var _this3 = this;
-
-      var atlasUrl = _ref10.atlasUrl,
-          experimentAccession = _ref10.experimentAccession,
-          k = _ref10.k,
-          perplexity = _ref10.perplexity,
-          geneId = _ref10.geneId;
-
-      var atlasEndpoint = 'json/experiments/' + experimentAccession + '/tsneplot/' + perplexity + '/clusters/' + k + '/expression/' + geneId;
-
-      return fetchResponseJson(atlasUrl, atlasEndpoint).then(function (responseJson) {
-        _this3.setState({
-          data: responseJson,
-          errorMessage: null,
-          loadingClusters: false,
-          loadingGeneExpression: false
-        });
-      }).catch(function (reason) {
-        _this3.setState({
-          errorMessage: reason.name + ': ' + reason.message,
-          loadingClusters: false,
-          loadingGeneExpression: false
-        });
-      });
-    }
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if (nextProps.atlasUrl !== this.props.atlasUrl || // First two will never happen but it’s the right thing to do
-      nextProps.experimentAccession !== this.props.experimentAccession || nextProps.perplexity !== this.props.perplexity || nextProps.k !== this.props.k) {
-
-        this.setState({
-          loadingClusters: true,
-          loadingGeneExpression: true
-        });
-        this._fetchAndSetState(nextProps);
-      } else if (nextProps.geneId !== this.props.geneId) {
-
-        this.setState({
-          loadingGeneExpression: true
-        });
-        this._fetchAndSetState(nextProps);
-      }
-    }
-  }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.setState({
-        loadingClusters: true,
-        loadingGeneExpression: true
-      });
-      // Having _fetchAndSetState as callback is the right thing, but then we can’t return the promise; see tests
-      return this._fetchAndSetState(this.props);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _props4 = this.props,
-          height = _props4.height,
-          atlasUrl = _props4.atlasUrl,
-          resourcesUrl = _props4.resourcesUrl;
-      var _props5 = this.props,
-          suggesterEndpoint = _props5.suggesterEndpoint,
-          geneId = _props5.geneId,
-          highlightClusters = _props5.highlightClusters,
-          ks = _props5.ks,
-          k = _props5.k,
-          perplexities = _props5.perplexities,
-          perplexity = _props5.perplexity;
-      var _props6 = this.props,
-          onChangePerplexity = _props6.onChangePerplexity,
-          onChangeK = _props6.onChangeK,
-          onSelectGeneId = _props6.onSelectGeneId;
-      var _state2 = this.state,
-          loadingClusters = _state2.loadingClusters,
-          loadingGeneExpression = _state2.loadingGeneExpression,
-          data = _state2.data,
-          errorMessage = _state2.errorMessage;
-
-
-      return _react2.default.createElement(
-        'div',
-        { className: 'row' },
-        _react2.default.createElement(
-          'div',
-          { className: 'small-12 medium-6 columns' },
-          _react2.default.createElement(ClusterTSnePlot, { height: height,
-            plotData: data,
-            perplexities: perplexities,
-            perplexity: perplexity,
-            onChangePerplexity: onChangePerplexity,
-            ks: ks,
-            k: k,
-            onChangeK: onChangeK,
-            highlightClusters: highlightClusters,
-            loading: loadingClusters,
-            resourcesUrl: resourcesUrl,
-            errorMessage: errorMessage
-          })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'small-12 medium-6 columns' },
-          _react2.default.createElement(GeneExpressionTSnePlot, { height: height,
-            plotData: data,
-            atlasUrl: atlasUrl,
-            suggesterEndpoint: suggesterEndpoint,
-            onSelectGeneId: onSelectGeneId,
-            geneId: geneId,
-            highlightClusters: highlightClusters,
-            loading: loadingGeneExpression,
-            resourcesUrl: resourcesUrl,
-            errorMessage: errorMessage
-          })
-        )
-      );
-    }
-  }, {
-    key: 'componentDidCatch',
-    value: function componentDidCatch(error, info) {
-      this.setState({
-        errorMessage: '' + error
-      });
-    }
-  }]);
-
-  return ExperimentPageView;
-}(_react2.default.Component);
 
 /***/ }),
 /* 374 */,
