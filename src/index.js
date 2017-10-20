@@ -11,10 +11,29 @@ import ReactSelect from 'react-select'
 import 'react-select/dist/react-select.css';
 
 
+const SUFFIX=" individual"
 const baseConfig = ({xAxisCategories,useLogarithmicAxis}) => ({
 	chart: {
 		type: 'boxplot',
-		zoomType: 'x'
+		zoomType: 'x',
+		events: {
+	      load: function() {
+
+			//works apart from when you later take some series out with the menu
+			//http://jsfiddle.net/sza4odkz/1/
+			this.series.forEach((series,ix,self) => {
+				if(series.type=='scatter'){
+					const correspondingBoxplotSeries = self.find((otherSeries, otherIx) =>( otherSeries.name == series.name.replace(SUFFIX,"") && otherIx !==ix))
+
+					if (correspondingBoxplotSeries){
+						series.data.forEach((point) => {
+							point.x = correspondingBoxplotSeries.xAxis.toValue(correspondingBoxplotSeries.data[point.x].shapeArgs.x + (correspondingBoxplotSeries.data[point.x].shapeArgs.width /2 ) + correspondingBoxplotSeries.group.translateX + (correspondingBoxplotSeries.data[point.x].stem.strokeWidth() % 2 )/2)
+						})
+					}
+				}
+			})
+	    	}
+		}
 	},
 	title: {
 		text: ''
@@ -45,9 +64,19 @@ const baseConfig = ({xAxisCategories,useLogarithmicAxis}) => ({
 	,
 
 	plotOptions: {
+		column: {
+            grouping: false,
+            shadow: false
+        }
 	},
 })
 const boxPlotConfig = ({xAxisCategories, dataSeries,useLogarithmicAxis}) => Object.assign(
+	baseConfig({xAxisCategories,useLogarithmicAxis}),{
+    series: dataSeries
+})
+
+//TODO tooltip
+const plotConfig = ({xAxisCategories, dataSeries,useLogarithmicAxis}) => Object.assign(
 	baseConfig({xAxisCategories,useLogarithmicAxis}),{
     series: dataSeries
 })
@@ -74,70 +103,94 @@ const SelectTranscripts = ({rowNames,currentRowNames, onChangeCurrentRowNames}) 
 	/>
 )
 
+const boxPlotDataSeries = ({rows}) => (
+	rows.map(({id, name, expressions}) => ({
+		name: id,
+		data: expressions.map(
+					({values, stats}) =>(
+				stats
+				? [stats.min, stats.lower_quartile, stats.median, stats.upper_quartile, stats.max]
+				: []
+			))
+	}))
+)
 const BoxPlot = ({rows,columnHeaders,useLogarithmicAxis}) => (
 	<div key={`boxPlot`}>
 	  {rows.length && <ReactHighcharts config={boxPlotConfig({
 		  useLogarithmicAxis,
 		  xAxisCategories: columnHeaders.map(({id})=>id),
-		  dataSeries: rows.map(({id, name, expressions}) => ({
-			  name: id,
-			  data: expressions.map(
-						  ({values, stats}) =>(
-					  stats
-					  ? [stats.min, stats.lower_quartile, stats.median, stats.upper_quartile, stats.max]
-					  : []
-				  ))
-		  }))
+		  dataSeries: boxPlotDataSeries({rows})
 	  })}/>}
 	</div>
 )
+
+const scatterDataSeries = ({rows, useLogarithmicAxis}) => { return (
+	rows.map(({id, name, expressions},rowIndex) => ({
+		type: 'scatter',
+		name: id+SUFFIX,
+		data:
+		  [].concat.apply([],
+			 expressions.map(({values, stats}, ix) =>(
+			  values
+			  ? values
+				  .filter(({value})=> !useLogarithmicAxis || value >0)
+				  .map(({value, id, assays})=>({
+					  x:ix,
+					  y:value,
+					  info: {id, assays}
+				  }))
+			  : []
+			))),
+		marker: {
+		   fillColor: 'white',
+		   lineWidth: 1,
+		   lineColor: ReactHighcharts.Highcharts.getOptions().colors[rowIndex]
+		},
+		tooltip: {
+		   pointFormat: 'Expression: {point.y} TPM <br/> Assay:  {point.info.assays}'
+		}
+
+	}))
+)}
 
 const ScatterPlot = ({rows,columnHeaders,useLogarithmicAxis}) => (
 	<div key={`scatterPlot`}>
 	  {rows.length && <ReactHighcharts config={scatterPlotConfig({
 		  useLogarithmicAxis,
 		  xAxisCategories: columnHeaders.map(({id})=>id),
-		  dataSeries: rows.map(({id, name, expressions}) => ({
-			  type: 'scatter',
-			  name: id,
-			  data:
-			  	[].concat.apply([],
-				   expressions.map(({values, stats}, ix) =>(
-				  	values
-				  	? values
-						.filter(({value})=> !useLogarithmicAxis || value >0)
-						.map(({value, id, assays})=>({
-							x:ix,
-							y:value,
-							info: {id, assays}
-						}))
-				  	: []
-				)))
-		  }))
+		  dataSeries: scatterDataSeries({rows,useLogarithmicAxis})
 	  })}/>}
 	</div>
 )
 const DISPLAY_PLOT_TYPE = {
-	BOX:1, SCATTER:2
+	BOX:1, SCATTER:2, BOTH:3
 }
 const _Chart = ({rows,columnHeaders,toDisplay, onChangeToDisplay,useLogarithmicAxis,onChangeUseLogarithmicAxis}) => (
-	<div>
+  	<div>
 	<br/>
 	<div>
 		<span className="switch">
-			<input className="switch-input" id="a" type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.BOX} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.BOX)}  name="s"/>
-			<label className="switch-paddle" htmlFor="a">
+			<input className="switch-input" id={DISPLAY_PLOT_TYPE.BOX} type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.BOX} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.BOX)}  name="s"/>
+			<label className="switch-paddle" htmlFor={DISPLAY_PLOT_TYPE.BOX}>
 			</label>
 		</span>
-		<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Expression values: aggregate</span>
+		<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Expression values: boxplot summarizing assays for each assay group </span>
 	</div>
 	<div>
 		<span className="switch">
-			<input className="switch-input" id="b" type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.SCATTER} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.SCATTER)} name="s"/>
-			<label className="switch-paddle" htmlFor="b">
+			<input className="switch-input" id={DISPLAY_PLOT_TYPE.SCATTER} type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.SCATTER} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.SCATTER)} name="s"/>
+			<label className="switch-paddle" htmlFor={DISPLAY_PLOT_TYPE.SCATTER}>
 			</label>
 		</span>
-		<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Expression values: per assay</span>
+		<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Expression values: a dot per biological replicate for each assay group</span>
+	</div>
+	<div>
+		<span className="switch">
+			<input className="switch-input" id={DISPLAY_PLOT_TYPE.BOTH} type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.BOTH} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.BOTH)} name="s"/>
+			<label className="switch-paddle" htmlFor={DISPLAY_PLOT_TYPE.BOTH}>
+			</label>
+		</span>
+		<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Expression values: both boxplots and dots</span>
 	</div>
 	<br/>
 	<div>
@@ -148,13 +201,19 @@ const _Chart = ({rows,columnHeaders,toDisplay, onChangeToDisplay,useLogarithmicA
 		</span>
 		<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Use logarithmic axis</span>
 	</div>
-		<div style={toDisplay == DISPLAY_PLOT_TYPE.BOX ? {} : {display: "none"}}>
-			{BoxPlot({rows,columnHeaders,useLogarithmicAxis})}
-		</div>
-		<div style={toDisplay == DISPLAY_PLOT_TYPE.SCATTER ? {} : {display: "none"}}>
-			{ScatterPlot({rows,columnHeaders,useLogarithmicAxis})}
-		</div>
+	<div key={`chart`}>
+	  {rows.length && <ReactHighcharts config={plotConfig({
+		  useLogarithmicAxis,
+		  xAxisCategories: columnHeaders.map(({id})=>id),
+		  dataSeries:
+			  [].concat(
+				  toDisplay == DISPLAY_PLOT_TYPE.SCATTER ? [] : boxPlotDataSeries({rows})
+			  ).concat(
+				  toDisplay == DISPLAY_PLOT_TYPE.BOX ? [] : scatterDataSeries({rows,useLogarithmicAxis})
+			  )
+	  })}/>}
 	</div>
+  </div>
 )
 
 const Chart = uncontrollable(_Chart, {toDisplay: 'onChangeToDisplay',useLogarithmicAxis:'onChangeUseLogarithmicAxis' })
