@@ -11592,13 +11592,34 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 (0, _highchartsMore2.default)(_reactHighcharts2.default.Highcharts);
 
 
+var SUFFIX = " individual";
 var baseConfig = function baseConfig(_ref) {
 	var xAxisCategories = _ref.xAxisCategories,
 	    useLogarithmicAxis = _ref.useLogarithmicAxis;
 	return {
 		chart: {
 			type: 'boxplot',
-			zoomType: 'x'
+			zoomType: 'x',
+			events: {
+				load: function load() {
+
+					//works apart from when you later take some series out with the menu
+					//http://jsfiddle.net/sza4odkz/1/
+					this.series.forEach(function (series, ix, self) {
+						if (series.type == 'scatter') {
+							var correspondingBoxplotSeries = self.find(function (otherSeries, otherIx) {
+								return otherSeries.name == series.name.replace(SUFFIX, "") && otherIx !== ix;
+							});
+
+							if (correspondingBoxplotSeries) {
+								series.data.forEach(function (point) {
+									point.x = correspondingBoxplotSeries.xAxis.toValue(correspondingBoxplotSeries.data[point.x].shapeArgs.x + correspondingBoxplotSeries.data[point.x].shapeArgs.width / 2 + correspondingBoxplotSeries.group.translateX + correspondingBoxplotSeries.data[point.x].stem.strokeWidth() % 2 / 2);
+								});
+							}
+						}
+					});
+				}
+			}
 		},
 		title: {
 			text: ''
@@ -11627,7 +11648,12 @@ var baseConfig = function baseConfig(_ref) {
 			min: 0.1
 		},
 
-		plotOptions: {}
+		plotOptions: {
+			column: {
+				grouping: false,
+				shadow: false
+			}
+		}
 	};
 };
 var boxPlotConfig = function boxPlotConfig(_ref2) {
@@ -11639,10 +11665,20 @@ var boxPlotConfig = function boxPlotConfig(_ref2) {
 	});
 };
 
-var scatterPlotConfig = function scatterPlotConfig(_ref3) {
+//TODO tooltip
+var plotConfig = function plotConfig(_ref3) {
 	var xAxisCategories = _ref3.xAxisCategories,
 	    dataSeries = _ref3.dataSeries,
 	    useLogarithmicAxis = _ref3.useLogarithmicAxis;
+	return Object.assign(baseConfig({ xAxisCategories: xAxisCategories, useLogarithmicAxis: useLogarithmicAxis }), {
+		series: dataSeries
+	});
+};
+
+var scatterPlotConfig = function scatterPlotConfig(_ref4) {
+	var xAxisCategories = _ref4.xAxisCategories,
+	    dataSeries = _ref4.dataSeries,
+	    useLogarithmicAxis = _ref4.useLogarithmicAxis;
 	return Object.assign(baseConfig({ xAxisCategories: xAxisCategories, useLogarithmicAxis: useLogarithmicAxis }), {
 		series: dataSeries,
 		marker: {
@@ -11655,10 +11691,10 @@ var scatterPlotConfig = function scatterPlotConfig(_ref3) {
 	});
 };
 
-var SelectTranscripts = function SelectTranscripts(_ref4) {
-	var rowNames = _ref4.rowNames,
-	    currentRowNames = _ref4.currentRowNames,
-	    onChangeCurrentRowNames = _ref4.onChangeCurrentRowNames;
+var SelectTranscripts = function SelectTranscripts(_ref5) {
+	var rowNames = _ref5.rowNames,
+	    currentRowNames = _ref5.currentRowNames,
+	    onChangeCurrentRowNames = _ref5.onChangeCurrentRowNames;
 	return _react2.default.createElement(_reactSelect2.default, {
 		name: '',
 		options: rowNames.map(function (name) {
@@ -11674,88 +11710,107 @@ var SelectTranscripts = function SelectTranscripts(_ref4) {
 	});
 };
 
-var BoxPlot = function BoxPlot(_ref5) {
-	var rows = _ref5.rows,
-	    columnHeaders = _ref5.columnHeaders,
-	    useLogarithmicAxis = _ref5.useLogarithmicAxis;
-	return _react2.default.createElement(
-		'div',
-		{ key: 'boxPlot' },
-		rows.length && _react2.default.createElement(_reactHighcharts2.default, { config: boxPlotConfig({
-				useLogarithmicAxis: useLogarithmicAxis,
-				xAxisCategories: columnHeaders.map(function (_ref6) {
-					var id = _ref6.id;
-					return id;
-				}),
-				dataSeries: rows.map(function (_ref7) {
-					var id = _ref7.id,
-					    name = _ref7.name,
-					    expressions = _ref7.expressions;
-					return {
-						name: id,
-						data: expressions.map(function (_ref8) {
-							var values = _ref8.values,
-							    stats = _ref8.stats;
-							return stats ? [stats.min, stats.lower_quartile, stats.median, stats.upper_quartile, stats.max] : [];
-						})
-					};
-				})
-			}) })
-	);
+var boxPlotDataSeries = function boxPlotDataSeries(_ref6) {
+	var rows = _ref6.rows;
+	return rows.map(function (_ref7) {
+		var id = _ref7.id,
+		    name = _ref7.name,
+		    expressions = _ref7.expressions;
+		return {
+			name: id,
+			data: expressions.map(function (_ref8) {
+				var values = _ref8.values,
+				    stats = _ref8.stats;
+				return stats ? [stats.min, stats.lower_quartile, stats.median, stats.upper_quartile, stats.max] : [];
+			})
+		};
+	});
 };
-
-var ScatterPlot = function ScatterPlot(_ref9) {
+var BoxPlot = function BoxPlot(_ref9) {
 	var rows = _ref9.rows,
 	    columnHeaders = _ref9.columnHeaders,
 	    useLogarithmicAxis = _ref9.useLogarithmicAxis;
 	return _react2.default.createElement(
 		'div',
-		{ key: 'scatterPlot' },
-		rows.length && _react2.default.createElement(_reactHighcharts2.default, { config: scatterPlotConfig({
+		{ key: 'boxPlot' },
+		rows.length && _react2.default.createElement(_reactHighcharts2.default, { config: boxPlotConfig({
 				useLogarithmicAxis: useLogarithmicAxis,
 				xAxisCategories: columnHeaders.map(function (_ref10) {
 					var id = _ref10.id;
 					return id;
 				}),
-				dataSeries: rows.map(function (_ref11) {
-					var id = _ref11.id,
-					    name = _ref11.name,
-					    expressions = _ref11.expressions;
+				dataSeries: boxPlotDataSeries({ rows: rows })
+			}) })
+	);
+};
+
+var scatterDataSeries = function scatterDataSeries(_ref11) {
+	var rows = _ref11.rows,
+	    useLogarithmicAxis = _ref11.useLogarithmicAxis;
+	return rows.map(function (_ref12, rowIndex) {
+		var id = _ref12.id,
+		    name = _ref12.name,
+		    expressions = _ref12.expressions;
+		return {
+			type: 'scatter',
+			name: id + SUFFIX,
+			data: [].concat.apply([], expressions.map(function (_ref13, ix) {
+				var values = _ref13.values,
+				    stats = _ref13.stats;
+				return values ? values.filter(function (_ref14) {
+					var value = _ref14.value;
+					return !useLogarithmicAxis || value > 0;
+				}).map(function (_ref15) {
+					var value = _ref15.value,
+					    id = _ref15.id,
+					    assays = _ref15.assays;
 					return {
-						type: 'scatter',
-						name: id,
-						data: [].concat.apply([], expressions.map(function (_ref12, ix) {
-							var values = _ref12.values,
-							    stats = _ref12.stats;
-							return values ? values.filter(function (_ref13) {
-								var value = _ref13.value;
-								return !useLogarithmicAxis || value > 0;
-							}).map(function (_ref14) {
-								var value = _ref14.value,
-								    id = _ref14.id,
-								    assays = _ref14.assays;
-								return {
-									x: ix,
-									y: value,
-									info: { id: id, assays: assays }
-								};
-							}) : [];
-						}))
+						x: ix,
+						y: value,
+						info: { id: id, assays: assays }
 					};
-				})
+				}) : [];
+			})),
+			marker: {
+				fillColor: 'white',
+				lineWidth: 1,
+				lineColor: _reactHighcharts2.default.Highcharts.getOptions().colors[rowIndex]
+			},
+			tooltip: {
+				pointFormat: 'Expression: {point.y} TPM <br/> Assay:  {point.info.assays}'
+			}
+
+		};
+	});
+};
+
+var ScatterPlot = function ScatterPlot(_ref16) {
+	var rows = _ref16.rows,
+	    columnHeaders = _ref16.columnHeaders,
+	    useLogarithmicAxis = _ref16.useLogarithmicAxis;
+	return _react2.default.createElement(
+		'div',
+		{ key: 'scatterPlot' },
+		rows.length && _react2.default.createElement(_reactHighcharts2.default, { config: scatterPlotConfig({
+				useLogarithmicAxis: useLogarithmicAxis,
+				xAxisCategories: columnHeaders.map(function (_ref17) {
+					var id = _ref17.id;
+					return id;
+				}),
+				dataSeries: scatterDataSeries({ rows: rows, useLogarithmicAxis: useLogarithmicAxis })
 			}) })
 	);
 };
 var DISPLAY_PLOT_TYPE = {
-	BOX: 1, SCATTER: 2
+	BOX: 1, SCATTER: 2, BOTH: 3
 };
-var _Chart = function _Chart(_ref15) {
-	var rows = _ref15.rows,
-	    columnHeaders = _ref15.columnHeaders,
-	    toDisplay = _ref15.toDisplay,
-	    onChangeToDisplay = _ref15.onChangeToDisplay,
-	    useLogarithmicAxis = _ref15.useLogarithmicAxis,
-	    onChangeUseLogarithmicAxis = _ref15.onChangeUseLogarithmicAxis;
+var _Chart = function _Chart(_ref18) {
+	var rows = _ref18.rows,
+	    columnHeaders = _ref18.columnHeaders,
+	    toDisplay = _ref18.toDisplay,
+	    onChangeToDisplay = _ref18.onChangeToDisplay,
+	    useLogarithmicAxis = _ref18.useLogarithmicAxis,
+	    onChangeUseLogarithmicAxis = _ref18.onChangeUseLogarithmicAxis;
 	return _react2.default.createElement(
 		'div',
 		null,
@@ -11766,13 +11821,13 @@ var _Chart = function _Chart(_ref15) {
 			_react2.default.createElement(
 				'span',
 				{ className: 'switch' },
-				_react2.default.createElement('input', { className: 'switch-input', id: 'a', type: 'radio', checked: toDisplay == DISPLAY_PLOT_TYPE.BOX, onChange: onChangeToDisplay.bind(undefined, DISPLAY_PLOT_TYPE.BOX), name: 's' }),
-				_react2.default.createElement('label', { className: 'switch-paddle', htmlFor: 'a' })
+				_react2.default.createElement('input', { className: 'switch-input', id: DISPLAY_PLOT_TYPE.BOX, type: 'radio', checked: toDisplay == DISPLAY_PLOT_TYPE.BOX, onChange: onChangeToDisplay.bind(undefined, DISPLAY_PLOT_TYPE.BOX), name: 's' }),
+				_react2.default.createElement('label', { className: 'switch-paddle', htmlFor: DISPLAY_PLOT_TYPE.BOX })
 			),
 			_react2.default.createElement(
 				'span',
 				{ style: { margin: "1rem", fontSize: "large", verticalAlign: "top" } },
-				'Expression values: aggregate'
+				'Expression values: boxplot summarizing assays for each assay group '
 			)
 		),
 		_react2.default.createElement(
@@ -11781,13 +11836,28 @@ var _Chart = function _Chart(_ref15) {
 			_react2.default.createElement(
 				'span',
 				{ className: 'switch' },
-				_react2.default.createElement('input', { className: 'switch-input', id: 'b', type: 'radio', checked: toDisplay == DISPLAY_PLOT_TYPE.SCATTER, onChange: onChangeToDisplay.bind(undefined, DISPLAY_PLOT_TYPE.SCATTER), name: 's' }),
-				_react2.default.createElement('label', { className: 'switch-paddle', htmlFor: 'b' })
+				_react2.default.createElement('input', { className: 'switch-input', id: DISPLAY_PLOT_TYPE.SCATTER, type: 'radio', checked: toDisplay == DISPLAY_PLOT_TYPE.SCATTER, onChange: onChangeToDisplay.bind(undefined, DISPLAY_PLOT_TYPE.SCATTER), name: 's' }),
+				_react2.default.createElement('label', { className: 'switch-paddle', htmlFor: DISPLAY_PLOT_TYPE.SCATTER })
 			),
 			_react2.default.createElement(
 				'span',
 				{ style: { margin: "1rem", fontSize: "large", verticalAlign: "top" } },
-				'Expression values: per assay'
+				'Expression values: a dot per biological replicate for each assay group'
+			)
+		),
+		_react2.default.createElement(
+			'div',
+			null,
+			_react2.default.createElement(
+				'span',
+				{ className: 'switch' },
+				_react2.default.createElement('input', { className: 'switch-input', id: DISPLAY_PLOT_TYPE.BOTH, type: 'radio', checked: toDisplay == DISPLAY_PLOT_TYPE.BOTH, onChange: onChangeToDisplay.bind(undefined, DISPLAY_PLOT_TYPE.BOTH), name: 's' }),
+				_react2.default.createElement('label', { className: 'switch-paddle', htmlFor: DISPLAY_PLOT_TYPE.BOTH })
+			),
+			_react2.default.createElement(
+				'span',
+				{ style: { margin: "1rem", fontSize: "large", verticalAlign: "top" } },
+				'Expression values: both boxplots and dots'
 			)
 		),
 		_react2.default.createElement('br', null),
@@ -11808,13 +11878,15 @@ var _Chart = function _Chart(_ref15) {
 		),
 		_react2.default.createElement(
 			'div',
-			{ style: toDisplay == DISPLAY_PLOT_TYPE.BOX ? {} : { display: "none" } },
-			BoxPlot({ rows: rows, columnHeaders: columnHeaders, useLogarithmicAxis: useLogarithmicAxis })
-		),
-		_react2.default.createElement(
-			'div',
-			{ style: toDisplay == DISPLAY_PLOT_TYPE.SCATTER ? {} : { display: "none" } },
-			ScatterPlot({ rows: rows, columnHeaders: columnHeaders, useLogarithmicAxis: useLogarithmicAxis })
+			{ key: 'chart' },
+			rows.length && _react2.default.createElement(_reactHighcharts2.default, { config: plotConfig({
+					useLogarithmicAxis: useLogarithmicAxis,
+					xAxisCategories: columnHeaders.map(function (_ref19) {
+						var id = _ref19.id;
+						return id;
+					}),
+					dataSeries: [].concat(toDisplay == DISPLAY_PLOT_TYPE.SCATTER ? [] : boxPlotDataSeries({ rows: rows })).concat(toDisplay == DISPLAY_PLOT_TYPE.BOX ? [] : scatterDataSeries({ rows: rows, useLogarithmicAxis: useLogarithmicAxis }))
+				}) })
 		)
 	);
 };
@@ -11826,12 +11898,12 @@ Chart.defaultProps = {
 	defaultUseLogarithmicAxis: true
 };
 
-var _ChartWithSwitcher = function _ChartWithSwitcher(_ref16) {
-	var columnHeaders = _ref16.columnHeaders,
-	    rows = _ref16.rows,
-	    currentRows = _ref16.currentRows,
-	    defaultCurrentRows = _ref16.defaultCurrentRows,
-	    onChangeCurrentRows = _ref16.onChangeCurrentRows;
+var _ChartWithSwitcher = function _ChartWithSwitcher(_ref20) {
+	var columnHeaders = _ref20.columnHeaders,
+	    rows = _ref20.rows,
+	    currentRows = _ref20.currentRows,
+	    defaultCurrentRows = _ref20.defaultCurrentRows,
+	    onChangeCurrentRows = _ref20.onChangeCurrentRows;
 	return _react2.default.createElement(
 		'div',
 		null,
@@ -11859,9 +11931,9 @@ var _ChartWithSwitcher = function _ChartWithSwitcher(_ref16) {
 
 var ChartWithSwitcher = (0, _uncontrollable2.default)(_ChartWithSwitcher, { currentRows: "onChangeCurrentRows" });
 
-var Main = function Main(_ref17) {
-	var columnHeaders = _ref17.columnHeaders,
-	    rows = _ref17.profiles.rows;
+var Main = function Main(_ref21) {
+	var columnHeaders = _ref21.columnHeaders,
+	    rows = _ref21.profiles.rows;
 	return _react2.default.createElement(
 		'div',
 		null,
