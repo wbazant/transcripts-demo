@@ -35,6 +35,7 @@ const baseConfig = ({xAxisCategories,useLogarithmicAxis}) => ({
 	    	}
 		}
 	},
+
 	title: {
 		text: ''
 	},
@@ -63,10 +64,18 @@ const baseConfig = ({xAxisCategories,useLogarithmicAxis}) => ({
 	}
 	,
 
+
 	plotOptions: {
 		column: {
             grouping: false,
-            shadow: false
+            shadow: false,
+        },
+		series: {
+            events: {
+                legendItemClick: function () {
+                        return false;
+                }
+            }
         }
 	},
 })
@@ -137,6 +146,7 @@ const scatterDataSeries = ({rows, useLogarithmicAxis}) => { return (
 				  .map(({value, id, assays})=>({
 					  x:ix,
 					  y:value,
+					  color: ReactHighcharts.Highcharts.getOptions().colors[rowIndex],
 					  info: {id, assays}
 				  }))
 			  : []
@@ -165,42 +175,44 @@ const ScatterPlot = ({rows,columnHeaders,useLogarithmicAxis}) => (
 const DISPLAY_PLOT_TYPE = {
 	BOX:1, SCATTER:2, BOTH:3
 }
+/*
+<div>
+	<span className="switch">
+		<input className="switch-input" id={DISPLAY_PLOT_TYPE.BOX} type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.BOX} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.BOX)}  name="s"/>
+		<label className="switch-paddle" htmlFor={DISPLAY_PLOT_TYPE.BOX}>
+		</label>
+	</span>
+	<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Expression values: boxplot summarizing assays for each assay group </span>
+</div>
+<div>
+	<span className="switch">
+		<input className="switch-input" id={DISPLAY_PLOT_TYPE.SCATTER} type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.SCATTER} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.SCATTER)} name="s"/>
+		<label className="switch-paddle" htmlFor={DISPLAY_PLOT_TYPE.SCATTER}>
+		</label>
+	</span>
+	<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Expression values: a dot per biological replicate for each assay group</span>
+</div>
+<div>
+	<span className="switch">
+		<input className="switch-input" id={DISPLAY_PLOT_TYPE.BOTH} type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.BOTH} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.BOTH)} name="s"/>
+		<label className="switch-paddle" htmlFor={DISPLAY_PLOT_TYPE.BOTH}>
+		</label>
+	</span>
+	<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Expression values: both boxplots and dots</span>
+</div>
+<br/>
+<div>
+	<span className="switch">
+		<input className="switch-input" id="c" type="checkbox" checked={useLogarithmicAxis} onChange={onChangeUseLogarithmicAxis.bind(this, !useLogarithmicAxis)} name="s"/>
+		<label className="switch-paddle" htmlFor="c">
+		</label>
+	</span>
+	<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Use logarithmic axis</span>
+</div>
+*/
+
 const _Chart = ({rows,columnHeaders,toDisplay, onChangeToDisplay,useLogarithmicAxis,onChangeUseLogarithmicAxis}) => (
   	<div>
-	<br/>
-	<div>
-		<span className="switch">
-			<input className="switch-input" id={DISPLAY_PLOT_TYPE.BOX} type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.BOX} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.BOX)}  name="s"/>
-			<label className="switch-paddle" htmlFor={DISPLAY_PLOT_TYPE.BOX}>
-			</label>
-		</span>
-		<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Expression values: boxplot summarizing assays for each assay group </span>
-	</div>
-	<div>
-		<span className="switch">
-			<input className="switch-input" id={DISPLAY_PLOT_TYPE.SCATTER} type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.SCATTER} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.SCATTER)} name="s"/>
-			<label className="switch-paddle" htmlFor={DISPLAY_PLOT_TYPE.SCATTER}>
-			</label>
-		</span>
-		<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Expression values: a dot per biological replicate for each assay group</span>
-	</div>
-	<div>
-		<span className="switch">
-			<input className="switch-input" id={DISPLAY_PLOT_TYPE.BOTH} type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.BOTH} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.BOTH)} name="s"/>
-			<label className="switch-paddle" htmlFor={DISPLAY_PLOT_TYPE.BOTH}>
-			</label>
-		</span>
-		<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Expression values: both boxplots and dots</span>
-	</div>
-	<br/>
-	<div>
-		<span className="switch">
-			<input className="switch-input" id="c" type="checkbox" checked={useLogarithmicAxis} onChange={onChangeUseLogarithmicAxis.bind(this, !useLogarithmicAxis)} name="s"/>
-			<label className="switch-paddle" htmlFor="c">
-			</label>
-		</span>
-		<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Use logarithmic axis</span>
-	</div>
 	<div key={`chart`}>
 	  {rows.length && <ReactHighcharts config={plotConfig({
 		  useLogarithmicAxis,
@@ -219,7 +231,7 @@ const _Chart = ({rows,columnHeaders,toDisplay, onChangeToDisplay,useLogarithmicA
 const Chart = uncontrollable(_Chart, {toDisplay: 'onChangeToDisplay',useLogarithmicAxis:'onChangeUseLogarithmicAxis' })
 
 Chart.defaultProps = {
-	defaultToDisplay: DISPLAY_PLOT_TYPE.BOX,
+	defaultToDisplay: DISPLAY_PLOT_TYPE.BOTH,
 	defaultUseLogarithmicAxis:true,
 }
 
