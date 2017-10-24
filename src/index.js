@@ -12,7 +12,7 @@ import 'react-select/dist/react-select.css';
 
 
 const SUFFIX=" individual"
-const baseConfig = ({xAxisCategories,useLogarithmicAxis}) => ({
+const baseConfig = ({xAxisCategories,useLogarithmicAxis,pointShape}) => ({
 	chart: {
 		type: 'boxplot',
 		zoomType: 'x',
@@ -71,12 +71,30 @@ const baseConfig = ({xAxisCategories,useLogarithmicAxis}) => ({
             shadow: false,
         },
 		series: {
+			animation: false,
             events: {
                 legendItemClick: function () {
                         return false;
                 }
             }
-        }
+        },
+		scatter: {
+		   marker: {
+			   symbol: pointShape,
+			   states: {
+				   hover: {
+					   enabled: true,
+				   }
+			   }
+		   },
+		   states: {
+			   hover: {
+				   marker: {
+					   enabled: false
+				   }
+			   }
+		   }
+	   }
 	},
 })
 const boxPlotConfig = ({xAxisCategories, dataSeries,useLogarithmicAxis}) => Object.assign(
@@ -85,18 +103,14 @@ const boxPlotConfig = ({xAxisCategories, dataSeries,useLogarithmicAxis}) => Obje
 })
 
 //TODO tooltip
-const plotConfig = ({xAxisCategories, dataSeries,useLogarithmicAxis}) => Object.assign(
-	baseConfig({xAxisCategories,useLogarithmicAxis}),{
+const plotConfig = ({xAxisCategories, dataSeries,useLogarithmicAxis, pointShape}) => Object.assign(
+	baseConfig({xAxisCategories,useLogarithmicAxis,pointShape}),{
     series: dataSeries
 })
 
 const scatterPlotConfig = ({xAxisCategories, dataSeries,useLogarithmicAxis}) => Object.assign(
 	baseConfig({xAxisCategories,useLogarithmicAxis}),{
     series: dataSeries,
-	marker: {
-		lineWidth: 1,
-		lineColor: ReactHighcharts.Highcharts.getOptions().colors[0]
-	},
 	tooltip: {
         pointFormat: 'Expression: {point.y} TPM <br/> Assay:  {point.info.assays}'
     }
@@ -137,6 +151,7 @@ const scatterDataSeries = ({rows, useLogarithmicAxis}) => { return (
 	rows.map(({id, name, expressions},rowIndex) => ({
 		type: 'scatter',
 		name: id+SUFFIX,
+		color: ReactHighcharts.Highcharts.getOptions().colors[rowIndex],
 		data:
 		  [].concat.apply([],
 			 expressions.map(({values, stats}, ix) =>(
@@ -146,15 +161,12 @@ const scatterDataSeries = ({rows, useLogarithmicAxis}) => { return (
 				  .map(({value, id, assays})=>({
 					  x:ix,
 					  y:value,
-					  color: ReactHighcharts.Highcharts.getOptions().colors[rowIndex],
 					  info: {id, assays}
 				  }))
 			  : []
 			))),
 		marker: {
-		   fillColor: 'white',
 		   lineWidth: 1,
-		   lineColor: ReactHighcharts.Highcharts.getOptions().colors[rowIndex]
 		},
 		tooltip: {
 		   pointFormat: 'Expression: {point.y} TPM <br/> Assay:  {point.info.assays}'
@@ -211,10 +223,24 @@ const DISPLAY_PLOT_TYPE = {
 </div>
 */
 
-const _Chart = ({rows,columnHeaders,toDisplay, onChangeToDisplay,useLogarithmicAxis,onChangeUseLogarithmicAxis}) => (
+const _Chart = ({rows,columnHeaders,toDisplay, onChangeToDisplay,useLogarithmicAxis,onChangeUseLogarithmicAxis,pointShape, onChangePointShape }) => (
   	<div>
+	<div>
+	{["", "circle", "square", "diamond", "triangle", "triangle-down"].map((shape)=> (
+		<div key={"key"+shape}>
+			<span className="switch">
+				<input className="switch-input" id={"id"+shape} type="radio" checked={shape==pointShape} onChange={onChangePointShape.bind(this, shape)}  name="s"/>
+				<label className="switch-paddle" htmlFor={"id"+shape}>
+				</label>
+			</span>
+			<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Point shape: {shape || "None - let highcharts decide"} </span>
+		</div>
+	))}
+	</div>
+	<br/>
 	<div key={`chart`}>
 	  {rows.length && <ReactHighcharts config={plotConfig({
+		  pointShape,
 		  useLogarithmicAxis,
 		  xAxisCategories: columnHeaders.map(({id})=>id),
 		  dataSeries:
@@ -228,11 +254,12 @@ const _Chart = ({rows,columnHeaders,toDisplay, onChangeToDisplay,useLogarithmicA
   </div>
 )
 
-const Chart = uncontrollable(_Chart, {toDisplay: 'onChangeToDisplay',useLogarithmicAxis:'onChangeUseLogarithmicAxis' })
+const Chart = uncontrollable(_Chart, {toDisplay: 'onChangeToDisplay',useLogarithmicAxis:'onChangeUseLogarithmicAxis', pointShape:"onChangePointShape" })
 
 Chart.defaultProps = {
 	defaultToDisplay: DISPLAY_PLOT_TYPE.BOTH,
 	defaultUseLogarithmicAxis:true,
+	defaultPointShape: "circle"
 }
 
 const _ChartWithSwitcher = ({columnHeaders,rows,currentRows, defaultCurrentRows, onChangeCurrentRows}) => (
