@@ -11595,7 +11595,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var SUFFIX = " individual";
 var baseConfig = function baseConfig(_ref) {
 	var xAxisCategories = _ref.xAxisCategories,
-	    useLogarithmicAxis = _ref.useLogarithmicAxis;
+	    useLogarithmicAxis = _ref.useLogarithmicAxis,
+	    pointShape = _ref.pointShape;
 	return {
 		chart: {
 			type: 'boxplot',
@@ -11621,6 +11622,7 @@ var baseConfig = function baseConfig(_ref) {
 				}
 			}
 		},
+
 		title: {
 			text: ''
 		},
@@ -11652,6 +11654,31 @@ var baseConfig = function baseConfig(_ref) {
 			column: {
 				grouping: false,
 				shadow: false
+			},
+			series: {
+				animation: false,
+				events: {
+					legendItemClick: function legendItemClick() {
+						return false;
+					}
+				}
+			},
+			scatter: {
+				marker: {
+					symbol: pointShape,
+					states: {
+						hover: {
+							enabled: true
+						}
+					}
+				},
+				states: {
+					hover: {
+						marker: {
+							enabled: false
+						}
+					}
+				}
 			}
 		}
 	};
@@ -11669,8 +11696,9 @@ var boxPlotConfig = function boxPlotConfig(_ref2) {
 var plotConfig = function plotConfig(_ref3) {
 	var xAxisCategories = _ref3.xAxisCategories,
 	    dataSeries = _ref3.dataSeries,
-	    useLogarithmicAxis = _ref3.useLogarithmicAxis;
-	return Object.assign(baseConfig({ xAxisCategories: xAxisCategories, useLogarithmicAxis: useLogarithmicAxis }), {
+	    useLogarithmicAxis = _ref3.useLogarithmicAxis,
+	    pointShape = _ref3.pointShape;
+	return Object.assign(baseConfig({ xAxisCategories: xAxisCategories, useLogarithmicAxis: useLogarithmicAxis, pointShape: pointShape }), {
 		series: dataSeries
 	});
 };
@@ -11681,10 +11709,6 @@ var scatterPlotConfig = function scatterPlotConfig(_ref4) {
 	    useLogarithmicAxis = _ref4.useLogarithmicAxis;
 	return Object.assign(baseConfig({ xAxisCategories: xAxisCategories, useLogarithmicAxis: useLogarithmicAxis }), {
 		series: dataSeries,
-		marker: {
-			lineWidth: 1,
-			lineColor: _reactHighcharts2.default.Highcharts.getOptions().colors[0]
-		},
 		tooltip: {
 			pointFormat: 'Expression: {point.y} TPM <br/> Assay:  {point.info.assays}'
 		}
@@ -11754,6 +11778,7 @@ var scatterDataSeries = function scatterDataSeries(_ref11) {
 		return {
 			type: 'scatter',
 			name: id + SUFFIX,
+			color: _reactHighcharts2.default.Highcharts.getOptions().colors[rowIndex],
 			data: [].concat.apply([], expressions.map(function (_ref13, ix) {
 				var values = _ref13.values,
 				    stats = _ref13.stats;
@@ -11772,9 +11797,7 @@ var scatterDataSeries = function scatterDataSeries(_ref11) {
 				}) : [];
 			})),
 			marker: {
-				fillColor: 'white',
-				lineWidth: 1,
-				lineColor: _reactHighcharts2.default.Highcharts.getOptions().colors[rowIndex]
+				lineWidth: 1
 			},
 			tooltip: {
 				pointFormat: 'Expression: {point.y} TPM <br/> Assay:  {point.info.assays}'
@@ -11803,83 +11826,83 @@ var ScatterPlot = function ScatterPlot(_ref16) {
 };
 var DISPLAY_PLOT_TYPE = {
 	BOX: 1, SCATTER: 2, BOTH: 3
-};
-var _Chart = function _Chart(_ref18) {
+	/*
+ <div>
+ 	<span className="switch">
+ 		<input className="switch-input" id={DISPLAY_PLOT_TYPE.BOX} type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.BOX} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.BOX)}  name="s"/>
+ 		<label className="switch-paddle" htmlFor={DISPLAY_PLOT_TYPE.BOX}>
+ 		</label>
+ 	</span>
+ 	<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Expression values: boxplot summarizing assays for each assay group </span>
+ </div>
+ <div>
+ 	<span className="switch">
+ 		<input className="switch-input" id={DISPLAY_PLOT_TYPE.SCATTER} type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.SCATTER} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.SCATTER)} name="s"/>
+ 		<label className="switch-paddle" htmlFor={DISPLAY_PLOT_TYPE.SCATTER}>
+ 		</label>
+ 	</span>
+ 	<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Expression values: a dot per biological replicate for each assay group</span>
+ </div>
+ <div>
+ 	<span className="switch">
+ 		<input className="switch-input" id={DISPLAY_PLOT_TYPE.BOTH} type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.BOTH} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.BOTH)} name="s"/>
+ 		<label className="switch-paddle" htmlFor={DISPLAY_PLOT_TYPE.BOTH}>
+ 		</label>
+ 	</span>
+ 	<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Expression values: both boxplots and dots</span>
+ </div>
+ <br/>
+ <div>
+ 	<span className="switch">
+ 		<input className="switch-input" id="c" type="checkbox" checked={useLogarithmicAxis} onChange={onChangeUseLogarithmicAxis.bind(this, !useLogarithmicAxis)} name="s"/>
+ 		<label className="switch-paddle" htmlFor="c">
+ 		</label>
+ 	</span>
+ 	<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Use logarithmic axis</span>
+ </div>
+ */
+
+};var _Chart = function _Chart(_ref18) {
 	var rows = _ref18.rows,
 	    columnHeaders = _ref18.columnHeaders,
 	    toDisplay = _ref18.toDisplay,
 	    onChangeToDisplay = _ref18.onChangeToDisplay,
 	    useLogarithmicAxis = _ref18.useLogarithmicAxis,
-	    onChangeUseLogarithmicAxis = _ref18.onChangeUseLogarithmicAxis;
+	    onChangeUseLogarithmicAxis = _ref18.onChangeUseLogarithmicAxis,
+	    pointShape = _ref18.pointShape,
+	    onChangePointShape = _ref18.onChangePointShape;
 	return _react2.default.createElement(
 		'div',
 		null,
-		_react2.default.createElement('br', null),
 		_react2.default.createElement(
 			'div',
 			null,
-			_react2.default.createElement(
-				'span',
-				{ className: 'switch' },
-				_react2.default.createElement('input', { className: 'switch-input', id: DISPLAY_PLOT_TYPE.BOX, type: 'radio', checked: toDisplay == DISPLAY_PLOT_TYPE.BOX, onChange: onChangeToDisplay.bind(undefined, DISPLAY_PLOT_TYPE.BOX), name: 's' }),
-				_react2.default.createElement('label', { className: 'switch-paddle', htmlFor: DISPLAY_PLOT_TYPE.BOX })
-			),
-			_react2.default.createElement(
-				'span',
-				{ style: { margin: "1rem", fontSize: "large", verticalAlign: "top" } },
-				'Expression values: boxplot summarizing assays for each assay group '
-			)
-		),
-		_react2.default.createElement(
-			'div',
-			null,
-			_react2.default.createElement(
-				'span',
-				{ className: 'switch' },
-				_react2.default.createElement('input', { className: 'switch-input', id: DISPLAY_PLOT_TYPE.SCATTER, type: 'radio', checked: toDisplay == DISPLAY_PLOT_TYPE.SCATTER, onChange: onChangeToDisplay.bind(undefined, DISPLAY_PLOT_TYPE.SCATTER), name: 's' }),
-				_react2.default.createElement('label', { className: 'switch-paddle', htmlFor: DISPLAY_PLOT_TYPE.SCATTER })
-			),
-			_react2.default.createElement(
-				'span',
-				{ style: { margin: "1rem", fontSize: "large", verticalAlign: "top" } },
-				'Expression values: a dot per biological replicate for each assay group'
-			)
-		),
-		_react2.default.createElement(
-			'div',
-			null,
-			_react2.default.createElement(
-				'span',
-				{ className: 'switch' },
-				_react2.default.createElement('input', { className: 'switch-input', id: DISPLAY_PLOT_TYPE.BOTH, type: 'radio', checked: toDisplay == DISPLAY_PLOT_TYPE.BOTH, onChange: onChangeToDisplay.bind(undefined, DISPLAY_PLOT_TYPE.BOTH), name: 's' }),
-				_react2.default.createElement('label', { className: 'switch-paddle', htmlFor: DISPLAY_PLOT_TYPE.BOTH })
-			),
-			_react2.default.createElement(
-				'span',
-				{ style: { margin: "1rem", fontSize: "large", verticalAlign: "top" } },
-				'Expression values: both boxplots and dots'
-			)
+			["", "circle", "square", "diamond", "triangle", "triangle-down"].map(function (shape) {
+				return _react2.default.createElement(
+					'div',
+					{ key: "key" + shape },
+					_react2.default.createElement(
+						'span',
+						{ className: 'switch' },
+						_react2.default.createElement('input', { className: 'switch-input', id: "id" + shape, type: 'radio', checked: shape == pointShape, onChange: onChangePointShape.bind(undefined, shape), name: 's' }),
+						_react2.default.createElement('label', { className: 'switch-paddle', htmlFor: "id" + shape })
+					),
+					_react2.default.createElement(
+						'span',
+						{ style: { margin: "1rem", fontSize: "large", verticalAlign: "top" } },
+						'Point shape: ',
+						shape || "None - let highcharts decide",
+						' '
+					)
+				);
+			})
 		),
 		_react2.default.createElement('br', null),
-		_react2.default.createElement(
-			'div',
-			null,
-			_react2.default.createElement(
-				'span',
-				{ className: 'switch' },
-				_react2.default.createElement('input', { className: 'switch-input', id: 'c', type: 'checkbox', checked: useLogarithmicAxis, onChange: onChangeUseLogarithmicAxis.bind(undefined, !useLogarithmicAxis), name: 's' }),
-				_react2.default.createElement('label', { className: 'switch-paddle', htmlFor: 'c' })
-			),
-			_react2.default.createElement(
-				'span',
-				{ style: { margin: "1rem", fontSize: "large", verticalAlign: "top" } },
-				'Use logarithmic axis'
-			)
-		),
 		_react2.default.createElement(
 			'div',
 			{ key: 'chart' },
 			rows.length && _react2.default.createElement(_reactHighcharts2.default, { config: plotConfig({
+					pointShape: pointShape,
 					useLogarithmicAxis: useLogarithmicAxis,
 					xAxisCategories: columnHeaders.map(function (_ref19) {
 						var id = _ref19.id;
@@ -11891,11 +11914,12 @@ var _Chart = function _Chart(_ref18) {
 	);
 };
 
-var Chart = (0, _uncontrollable2.default)(_Chart, { toDisplay: 'onChangeToDisplay', useLogarithmicAxis: 'onChangeUseLogarithmicAxis' });
+var Chart = (0, _uncontrollable2.default)(_Chart, { toDisplay: 'onChangeToDisplay', useLogarithmicAxis: 'onChangeUseLogarithmicAxis', pointShape: "onChangePointShape" });
 
 Chart.defaultProps = {
-	defaultToDisplay: DISPLAY_PLOT_TYPE.BOX,
-	defaultUseLogarithmicAxis: true
+	defaultToDisplay: DISPLAY_PLOT_TYPE.BOTH,
+	defaultUseLogarithmicAxis: true,
+	defaultPointShape: "circle"
 };
 
 var _ChartWithSwitcher = function _ChartWithSwitcher(_ref20) {
