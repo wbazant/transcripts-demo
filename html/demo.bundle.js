@@ -11801,7 +11801,8 @@ var scatterDataSeries = function scatterDataSeries(_ref11) {
 			},
 			tooltip: {
 				pointFormat: 'Expression: {point.y} TPM <br/> Assay:  {point.info.assays}'
-			}
+			},
+			showInLegend: false
 
 		};
 	});
@@ -11826,43 +11827,9 @@ var ScatterPlot = function ScatterPlot(_ref16) {
 };
 var DISPLAY_PLOT_TYPE = {
 	BOX: 1, SCATTER: 2, BOTH: 3
-	/*
- <div>
- 	<span className="switch">
- 		<input className="switch-input" id={DISPLAY_PLOT_TYPE.BOX} type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.BOX} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.BOX)}  name="s"/>
- 		<label className="switch-paddle" htmlFor={DISPLAY_PLOT_TYPE.BOX}>
- 		</label>
- 	</span>
- 	<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Expression values: boxplot summarizing assays for each assay group </span>
- </div>
- <div>
- 	<span className="switch">
- 		<input className="switch-input" id={DISPLAY_PLOT_TYPE.SCATTER} type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.SCATTER} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.SCATTER)} name="s"/>
- 		<label className="switch-paddle" htmlFor={DISPLAY_PLOT_TYPE.SCATTER}>
- 		</label>
- 	</span>
- 	<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Expression values: a dot per biological replicate for each assay group</span>
- </div>
- <div>
- 	<span className="switch">
- 		<input className="switch-input" id={DISPLAY_PLOT_TYPE.BOTH} type="radio" checked={toDisplay==DISPLAY_PLOT_TYPE.BOTH} onChange={onChangeToDisplay.bind(this, DISPLAY_PLOT_TYPE.BOTH)} name="s"/>
- 		<label className="switch-paddle" htmlFor={DISPLAY_PLOT_TYPE.BOTH}>
- 		</label>
- 	</span>
- 	<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Expression values: both boxplots and dots</span>
- </div>
- <br/>
- <div>
- 	<span className="switch">
- 		<input className="switch-input" id="c" type="checkbox" checked={useLogarithmicAxis} onChange={onChangeUseLogarithmicAxis.bind(this, !useLogarithmicAxis)} name="s"/>
- 		<label className="switch-paddle" htmlFor="c">
- 		</label>
- 	</span>
- 	<span style={{margin:"1rem",fontSize:"large",verticalAlign:"top"}}>Use logarithmic axis</span>
- </div>
- */
+};
 
-};var _Chart = function _Chart(_ref18) {
+var _Chart = function _Chart(_ref18) {
 	var rows = _ref18.rows,
 	    columnHeaders = _ref18.columnHeaders,
 	    toDisplay = _ref18.toDisplay,
@@ -11874,29 +11841,6 @@ var DISPLAY_PLOT_TYPE = {
 	return _react2.default.createElement(
 		'div',
 		null,
-		_react2.default.createElement(
-			'div',
-			null,
-			["", "circle", "square", "diamond", "triangle", "triangle-down"].map(function (shape) {
-				return _react2.default.createElement(
-					'div',
-					{ key: "key" + shape },
-					_react2.default.createElement(
-						'span',
-						{ className: 'switch' },
-						_react2.default.createElement('input', { className: 'switch-input', id: "id" + shape, type: 'radio', checked: shape == pointShape, onChange: onChangePointShape.bind(undefined, shape), name: 's' }),
-						_react2.default.createElement('label', { className: 'switch-paddle', htmlFor: "id" + shape })
-					),
-					_react2.default.createElement(
-						'span',
-						{ style: { margin: "1rem", fontSize: "large", verticalAlign: "top" } },
-						'Point shape: ',
-						shape || "None - let highcharts decide",
-						' '
-					)
-				);
-			})
-		),
 		_react2.default.createElement('br', null),
 		_react2.default.createElement(
 			'div',
