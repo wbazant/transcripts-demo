@@ -141,7 +141,7 @@ const BoxPlot = ({rows,columnHeaders,useLogarithmicAxis}) => (
 	<div key={`boxPlot`}>
 	  {rows.length && <ReactHighcharts config={boxPlotConfig({
 		  useLogarithmicAxis,
-		  xAxisCategories: columnHeaders.map(({id})=>id),
+		  xAxisCategories: columnHeaders.map(({id, name})=>name || id),
 		  dataSeries: boxPlotDataSeries({rows})
 	  })}/>}
 	</div>
@@ -180,7 +180,7 @@ const ScatterPlot = ({rows,columnHeaders,useLogarithmicAxis}) => (
 	<div key={`scatterPlot`}>
 	  {rows.length && <ReactHighcharts config={scatterPlotConfig({
 		  useLogarithmicAxis,
-		  xAxisCategories: columnHeaders.map(({id})=>id),
+		  xAxisCategories: columnHeaders.map(({id,name})=>name || id),
 		  dataSeries: scatterDataSeries({rows,useLogarithmicAxis})
 	  })}/>}
 	</div>
