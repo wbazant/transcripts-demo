@@ -11760,8 +11760,9 @@ var BoxPlot = function BoxPlot(_ref9) {
 		rows.length && _react2.default.createElement(_reactHighcharts2.default, { config: boxPlotConfig({
 				useLogarithmicAxis: useLogarithmicAxis,
 				xAxisCategories: columnHeaders.map(function (_ref10) {
-					var id = _ref10.id;
-					return id;
+					var id = _ref10.id,
+					    name = _ref10.name;
+					return name || id;
 				}),
 				dataSeries: boxPlotDataSeries({ rows: rows })
 			}) })
@@ -11818,8 +11819,9 @@ var ScatterPlot = function ScatterPlot(_ref16) {
 		rows.length && _react2.default.createElement(_reactHighcharts2.default, { config: scatterPlotConfig({
 				useLogarithmicAxis: useLogarithmicAxis,
 				xAxisCategories: columnHeaders.map(function (_ref17) {
-					var id = _ref17.id;
-					return id;
+					var id = _ref17.id,
+					    name = _ref17.name;
+					return name || id;
 				}),
 				dataSeries: scatterDataSeries({ rows: rows, useLogarithmicAxis: useLogarithmicAxis })
 			}) })
